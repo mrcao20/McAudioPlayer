@@ -1,0 +1,18 @@
+#ifndef _MC_GLOBAL_H_
+#define _MC_GLOBAL_H_
+
+#include <QtCore/qglobal.h>
+#include <QxOrm.h>
+
+#define MC_CONTROLLER_STR "Controller"
+
+#ifdef _BUILDING_QX_DAO
+#define QX_REGISTER_HPP_QX_DAO QX_REGISTER_HPP_EXPORT_DLL
+#define QX_REGISTER_CPP_QX_DAO QX_REGISTER_CPP_EXPORT_DLL
+#else // _BUILDING_QX_DAO
+#define QX_REGISTER_HPP_QX_DAO QX_REGISTER_HPP_IMPORT_DLL
+#define QX_REGISTER_CPP_QX_DAO QX_REGISTER_CPP_IMPORT_DLL
+#endif // _BUILDING_QX_DAO
+
+#endif // !_MC_GLOBAL_H_
+

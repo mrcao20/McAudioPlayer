@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Header Files\Utils">
+      <UniqueIdentifier>{5de5e33e-881e-4fd9-8c3c-b14103bf9bb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{58ed6fd8-6330-497f-9eb7-0ddcfa084cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{8a469858-a0ba-4114-aa35-ed870bd94639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controller">
+      <UniqueIdentifier>{428825c8-fd90-4cbd-9096-04828a1a525b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain">
+      <UniqueIdentifier>{49d42eef-1884-4c26-8e46-65e1ab36b370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain\Bo">
+      <UniqueIdentifier>{f1cd2d0b-3123-4360-babf-5166deb6e72f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Service">
+      <UniqueIdentifier>{36e69fdb-4e9b-4c7c-ad71-3c5308da58b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Service">
+      <UniqueIdentifier>{aa415f6b-5938-45c2-a548-82c73d1c1f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Service\impl">
+      <UniqueIdentifier>{b7e64d87-1789-41a5-9c4e-b43ca7f13260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dao">
+      <UniqueIdentifier>{47fcdd6f-dca4-459f-b53d-19eb046c3b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dao">
+      <UniqueIdentifier>{6e1c4d7b-0c5c-44d0-b29f-9814b990a884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dao\impl">
+      <UniqueIdentifier>{30d67800-73f2-4f55-b44b-a881e3254ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain\Vo">
+      <UniqueIdentifier>{1fad642e-512e-41e6-816a-8509c6cffbe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Domain\Po">
+      <UniqueIdentifier>{f2e1791b-2316-464e-9341-3ec5e5cf41c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain">
+      <UniqueIdentifier>{a14d047f-efb3-4c4a-86cf-a017b13a7981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain\Po">
+      <UniqueIdentifier>{6ed3e210-4e43-437c-9138-c9604644a0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Domain\Vo">
+      <UniqueIdentifier>{9a9861d1-422f-4608-aaf7-18f7a146a229}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="McJsonUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="McControllerContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="McSongSheetController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="McSongSheetService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="McSongSheetDao.cpp">
+      <Filter>Source Files\Dao</Filter>
+    </ClCompile>
+    <ClCompile Include="McSongSheetPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusicController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusicService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="McAlbum.cpp">
+      <Filter>Source Files\Domain\Vo</Filter>
+    </ClCompile>
+    <ClCompile Include="McArtist.cpp">
+      <Filter>Source Files\Domain\Vo</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusic.cpp">
+      <Filter>Source Files\Domain\Vo</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusicDao.cpp">
+      <Filter>Source Files\Dao</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusicPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+    <ClCompile Include="McAlbumPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+    <ClCompile Include="McArtistPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="qml.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="McControllerContainer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="McSongSheetController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="McSongSheetService.h">
+      <Filter>Header Files\Service\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McSongSheetDao.h">
+      <Filter>Header Files\Dao\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McSongSheet.h">
+      <Filter>Header Files\Domain\Vo</Filter>
+    </QtMoc>
+    <QtMoc Include="McMusicController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="McMusic.h">
+      <Filter>Header Files\Domain\Vo</Filter>
+    </QtMoc>
+    <QtMoc Include="McAlbum.h">
+      <Filter>Header Files\Domain\Vo</Filter>
+    </QtMoc>
+    <QtMoc Include="McArtist.h">
+      <Filter>Header Files\Domain\Vo</Filter>
+    </QtMoc>
+    <QtMoc Include="McMusicService.h">
+      <Filter>Header Files\Service\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McMusicDao.h">
+      <Filter>Header Files\Dao\impl</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="McGlobal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="McRestResponse.h">
+      <Filter>Header Files\Domain\Bo</Filter>
+    </ClInclude>
+    <ClInclude Include="McJsonUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcSongSheetService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcSongSheetDao.h">
+      <Filter>Header Files\Dao</Filter>
+    </ClInclude>
+    <ClInclude Include="McSongSheetPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcMusicService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcMusicDao.h">
+      <Filter>Header Files\Dao</Filter>
+    </ClInclude>
+    <ClInclude Include="McMusicPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+    <ClInclude Include="McAlbumPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+    <ClInclude Include="McArtistPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
