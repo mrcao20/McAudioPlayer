@@ -11,6 +11,9 @@ public:
 	virtual ~IMcSongSheetDao() = default;
 
 	virtual QList<McSongSheet *> getSongSheets() noexcept = 0;
+	virtual void deleteSongSheet(McSongSheet* songSheet) noexcept = 0;
+	virtual void renameSongSheet(McSongSheet* songSheet) noexcept = 0;
+	virtual bool insert(McSongSheet* songSheet) noexcept = 0;
 };
 
 Q_DECLARE_METATYPE(IMcSongSheetDao*)

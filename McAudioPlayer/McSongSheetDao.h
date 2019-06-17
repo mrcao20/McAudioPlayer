@@ -16,6 +16,9 @@ public:
 	~McSongSheetDao();
 
 	QList<McSongSheet *> getSongSheets() noexcept override;
+	void deleteSongSheet(McSongSheet* songSheet) noexcept override;
+	void renameSongSheet(McSongSheet* songSheet) noexcept override;
+	bool insert(McSongSheet* songSheet) noexcept override;
 };
 
 Q_DECLARE_METATYPE(McSongSheetDao*)

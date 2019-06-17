@@ -75,6 +75,18 @@
     <Filter Include="Source Files\Domain\Vo">
       <UniqueIdentifier>{9a9861d1-422f-4608-aaf7-18f7a146a229}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{b5f88dfa-aa45-40fc-b383-f855b6d95c87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{fd6034d2-6233-4a2b-9d44-7a7129e1fdc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MusicApi">
+      <UniqueIdentifier>{f7ba0463-d327-423b-bb91-2fb303b31026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MusicApi">
+      <UniqueIdentifier>{6dad3b45-102e-4515-8098-78c3dc79bca4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,9 +98,6 @@
     <ClCompile Include="McControllerContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="McSongSheetController.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="McSongSheetService.cpp">
       <Filter>Source Files\Service</Filter>
     </ClCompile>
@@ -97,12 +106,6 @@
     </ClCompile>
     <ClCompile Include="McSongSheetPo.cpp">
       <Filter>Source Files\Domain\Po</Filter>
-    </ClCompile>
-    <ClCompile Include="McMusicController.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="McMusicService.cpp">
-      <Filter>Source Files\Service</Filter>
     </ClCompile>
     <ClCompile Include="McAlbum.cpp">
       <Filter>Source Files\Domain\Vo</Filter>
@@ -113,9 +116,6 @@
     <ClCompile Include="McMusic.cpp">
       <Filter>Source Files\Domain\Vo</Filter>
     </ClCompile>
-    <ClCompile Include="McMusicDao.cpp">
-      <Filter>Source Files\Dao</Filter>
-    </ClCompile>
     <ClCompile Include="McMusicPo.cpp">
       <Filter>Source Files\Domain\Po</Filter>
     </ClCompile>
@@ -125,18 +125,81 @@
     <ClCompile Include="McArtistPo.cpp">
       <Filter>Source Files\Domain\Po</Filter>
     </ClCompile>
+    <ClCompile Include="McModelContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="McSongSheetModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusicModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="McPlaylistModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="McSonglistModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="McSonglistService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="McPlaylistService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="McSonglistDao.cpp">
+      <Filter>Source Files\Dao</Filter>
+    </ClCompile>
+    <ClCompile Include="McPlaylistDao.cpp">
+      <Filter>Source Files\Dao</Filter>
+    </ClCompile>
+    <ClCompile Include="McSonglistPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+    <ClCompile Include="McPlaylistPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+    <ClCompile Include="McMusicDetailPo.cpp">
+      <Filter>Source Files\Domain\Po</Filter>
+    </ClCompile>
+    <ClCompile Include="McNetUtils.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="McQQMusic.cpp">
+      <Filter>Source Files\MusicApi</Filter>
+    </ClCompile>
+    <ClCompile Include="McAbstractMusic.cpp">
+      <Filter>Source Files\MusicApi</Filter>
+    </ClCompile>
+    <ClCompile Include="McYMusic.cpp">
+      <Filter>Source Files\MusicApi</Filter>
+    </ClCompile>
+    <ClCompile Include="McSongSheet.cpp">
+      <Filter>Source Files\Domain\Vo</Filter>
+    </ClCompile>
+    <ClCompile Include="McNetworkMusicModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="McNetworkMusicService.cpp">
+      <Filter>Source Files\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="McNetworkMusicDao.cpp">
+      <Filter>Source Files\Dao</Filter>
+    </ClCompile>
+    <ClCompile Include="McSingleApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="qml.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtRcc Include="image.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="McControllerContainer.h">
       <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="McSongSheetController.h">
-      <Filter>Header Files\Controller</Filter>
     </QtMoc>
     <QtMoc Include="McSongSheetService.h">
       <Filter>Header Files\Service\impl</Filter>
@@ -147,9 +210,6 @@
     <QtMoc Include="McSongSheet.h">
       <Filter>Header Files\Domain\Vo</Filter>
     </QtMoc>
-    <QtMoc Include="McMusicController.h">
-      <Filter>Header Files\Controller</Filter>
-    </QtMoc>
     <QtMoc Include="McMusic.h">
       <Filter>Header Files\Domain\Vo</Filter>
     </QtMoc>
@@ -159,11 +219,56 @@
     <QtMoc Include="McArtist.h">
       <Filter>Header Files\Domain\Vo</Filter>
     </QtMoc>
-    <QtMoc Include="McMusicService.h">
+    <QtMoc Include="McModelContainer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="McSongSheetModel.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="McMusicModel.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="McPlaylistModel.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="McSonglistModel.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="McSonglistService.h">
       <Filter>Header Files\Service\impl</Filter>
     </QtMoc>
-    <QtMoc Include="McMusicDao.h">
+    <QtMoc Include="McPlaylistService.h">
+      <Filter>Header Files\Service\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McSonglistDao.h">
       <Filter>Header Files\Dao\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McPlaylistDao.h">
+      <Filter>Header Files\Dao\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McNetUtils.h">
+      <Filter>Header Files\Utils</Filter>
+    </QtMoc>
+    <QtMoc Include="McQQMusic.h">
+      <Filter>Header Files\MusicApi</Filter>
+    </QtMoc>
+    <QtMoc Include="McAbstractMusic.h">
+      <Filter>Header Files\MusicApi</Filter>
+    </QtMoc>
+    <QtMoc Include="McYMusic.h">
+      <Filter>Header Files\MusicApi</Filter>
+    </QtMoc>
+    <QtMoc Include="McNetworkMusicModel.h">
+      <Filter>Header Files\Model</Filter>
+    </QtMoc>
+    <QtMoc Include="McNetworkMusicService.h">
+      <Filter>Header Files\Service\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McNetworkMusicDao.h">
+      <Filter>Header Files\Dao\impl</Filter>
+    </QtMoc>
+    <QtMoc Include="McSingleApplication.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -185,12 +290,6 @@
     <ClInclude Include="McSongSheetPo.h">
       <Filter>Header Files\Domain\Po</Filter>
     </ClInclude>
-    <ClInclude Include="IMcMusicService.h">
-      <Filter>Header Files\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="IMcMusicDao.h">
-      <Filter>Header Files\Dao</Filter>
-    </ClInclude>
     <ClInclude Include="McMusicPo.h">
       <Filter>Header Files\Domain\Po</Filter>
     </ClInclude>
@@ -200,5 +299,44 @@
     <ClInclude Include="McArtistPo.h">
       <Filter>Header Files\Domain\Po</Filter>
     </ClInclude>
+    <ClInclude Include="IMcSonglistService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcPlaylistService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcSonglistDao.h">
+      <Filter>Header Files\Dao</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcPlaylistDao.h">
+      <Filter>Header Files\Dao</Filter>
+    </ClInclude>
+    <ClInclude Include="McSonglistPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+    <ClInclude Include="McPlaylistPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+    <ClInclude Include="McMusicDetailPo.h">
+      <Filter>Header Files\Domain\Po</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcMusicApi.h">
+      <Filter>Header Files\MusicApi</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcNetworkMusicService.h">
+      <Filter>Header Files\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="IMcNetworkMusicDao.h">
+      <Filter>Header Files\Dao</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="McAudioPlayer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon\format.ico" />
   </ItemGroup>
 </Project>

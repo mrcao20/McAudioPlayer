@@ -1,124 +1,155 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import "../../Common"
 
-Component {
-    id: songListViewComponent
-    ListView {
-        id: songListView
-        Component.onCompleted: {
-            console.log();
-            var json = "["
-            for(var i = 0; i < 100; ++i){
-                json += "{\"songName\":\"最美的回忆\", \"artist\":\"六哲\", \"album\": \"最美的回忆\"}";
-                if(i < 99)
-                    json += ",";
-            }
-            json += "]";
-            songListView.model = JSON.parse(json);
-        }
+ListView {
+    id: songListView
 
-        property real col1Width: width / 7 * 4
-        property real col2Width: width / 7
-        property real col3Width: width / 7 * 2/* - 15*/
-        property bool isShiftPressed: false
-        property bool isCtrlPressed: false
-        property var selectedItems: []
-        property int songSheetId: -1
+    property real col1Width: width / 7 * 4
+    property real col2Width: width / 7
+    property real col3Width: width / 7 * 2/* - 15*/
+    property bool isShiftPressed: false
+    property bool isCtrlPressed: false
+    property var selectedItems: []
+    property int songSheetId: -1
+    property var curMusic: main.curMusic
+    property var filterText: ""
 
-        onSongSheetIdChanged: {
-            var response = JSON.parse(controllerContainer.invoke("musicController.getMusics?songSheetId=" + songSheetId));
-            if(!response.success)
-                return;
-            var time = new Date().getTime();
-            songListView.model = response.payload;
-            console.log(new Date().getTime() - time);
-        }
-
-        clip: true
-        headerPositioning: ListView.OverlayHeader
-
-        header: Row {
-            width: parent.width
-            height: 29
-            z: 2
-            HeaderLabel {
-                width: songListView.col1Width
-                text: qsTr("歌名")
-            }
-            HeaderLabel {
-                width: songListView.col2Width
-                text: qsTr("歌手")
-            }
-            HeaderLabel {
-                width: songListView.col3Width
-                text: qsTr("专辑")
-            }
-        }
-
-        Keys.onPressed: {
-            if(event.key === Qt.Key_Up || event.key === Qt.Key_Down)
-                songListView.selectedItems = [];
-            songListView.isShiftPressed = event.key === Qt.Key_Shift;
-            songListView.isCtrlPressed = event.key === Qt.Key_Control;
-        }
-        Keys.onReleased: {
-            songListView.isShiftPressed = !event.key === Qt.Key_Shift;
-            songListView.isCtrlPressed = !event.key === Qt.Key_Control;
-        }
-
-        delegate: Control {
-            width: parent.width
-            height: 29
-            hoverEnabled: true
-            background: Rectangle {
-                color: parent.hovered ?  "#1c993e" : (songListView.currentIndex === index || songListView.selectedItems.indexOf(index) > -1) ? "#22af4b" : "#00000000"
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    songListView.forceActiveFocus();
-                    if(!songListView.isCtrlPressed && !songListView.isShiftPressed){
-                        songListView.selectedItems = [];
-                    }else if(songListView.isShiftPressed){
-                        var minIndex = songListView.currentIndex < index ? songListView.currentIndex : index;
-                        var maxIndex = songListView.currentIndex > index ? songListView.currentIndex : index;
-                        for(var i = minIndex + 1; i < maxIndex; ++i)
-                            if(songListView.selectedItems.indexOf(i) === -1)
-                                songListView.selectedItems.push(i);
-                    }
-                    songListView.currentIndex = index;
-                    if(songListView.selectedItems.indexOf(index) === -1)
-                        songListView.selectedItems.push(index);
-                }
-            }
-
-            Row {
-                anchors.fill: parent
-
-                MainControl {
-                    width: songListView.col1Width
-                    text: modelData.songName
-                }
-
-                InfoControl {
-                    width: songListView.col2Width
-                    //text: modelData.artist
-                }
-
-                InfoControl {
-                    width: songListView.col3Width
-                    //text: modelData.album
-                }
-            }
-        }
-
-        ScrollBar.vertical: ScrollBar {
-            hoverEnabled: true
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            policy: ScrollBar.AsNeeded
-        }
-
+    function setCurrentIndex(index){
+        songListView.selectedItems = [];
+        songListView.currentIndex = index;
     }
+    function updateIndex(){
+        if(!curMusic)
+            return;
+        var index = model.getIndex(curMusic);
+        setCurrentIndex(index);
+    }
+    function playIndex(index){
+        songListView.setCurrentIndex(index);
+        addToPlaylist(songListView.currentIndex, songListView.model.getMusics(), songListView.songSheetId);
+    }
+    function addToSongSheet(songSheetId){
+        model.addToSongSheet(songSheetId, selectedItems);
+    }
+
+    function setSongSheetId(id){
+        songSheetId = id;
+        if(songSheetId < 0)
+            return;
+        selectedItems = [];
+        model.updateMusic(songSheetId);
+        updateIndex();
+    }
+
+    function addMusics(musics){
+        songListView.model.addMusics(musics);
+    }
+
+    onCurMusicChanged: {
+        updateIndex();
+    }
+
+    Component.onDestruction: {
+        model.clearModel();
+    }
+
+    objectName: "SongListView"
+    clip: true
+    headerPositioning: ListView.OverlayHeader
+
+    header: Row {
+        width: parent.width
+        height: 29
+        z: 2
+        HeaderLabel {
+            width: songListView.col1Width
+            text: qsTr("歌名")
+        }
+        HeaderLabel {
+            width: songListView.col2Width
+            text: qsTr("歌手")
+        }
+        HeaderLabel {
+            width: songListView.col3Width
+            text: qsTr("专辑")
+        }
+    }
+
+    Keys.onPressed: {
+        if(event.key === Qt.Key_Up || event.key === Qt.Key_Down)
+            songListView.selectedItems = [];
+        songListView.isShiftPressed = event.key === Qt.Key_Shift;
+        songListView.isCtrlPressed = event.key === Qt.Key_Control;
+    }
+    Keys.onReleased: {
+        songListView.isShiftPressed = !event.key === Qt.Key_Shift;
+        songListView.isCtrlPressed = !event.key === Qt.Key_Control;
+    }
+
+    model: modelContainer.get("songlistModel")
+
+    delegate: Control {
+        visible: songName.indexOf(songListView.filterText) !== -1 ? true : false
+        width: parent.width
+        height: visible ? 29 : 0
+        hoverEnabled: true
+        background: Rectangle {
+            color: parent.hovered ?  "#1c993e" : (songListView.currentIndex === index || songListView.selectedItems.indexOf(index) > -1) ? "#22af4b" : "#00000000"
+        }
+        ListViewDelegateMouseArea {
+            listView: songListView
+            popupMenu: menu
+            onDoubleClicked: {
+                if(mouse.button === Qt.RightButton){
+                    return;
+                }
+
+                songListView.playIndex(index);
+            }
+        }
+
+        Row {
+            anchors.fill: parent
+
+            MainControl {
+                listView: songListView
+                width: songListView.col1Width
+                text: songName
+            }
+
+            InfoControl {
+                listView: songListView
+                width: songListView.col2Width
+                text: artist
+            }
+
+            InfoControl {
+                listView: songListView
+                width: songListView.col3Width
+                text: album
+            }
+        }
+    }
+
+    Menu {
+        id: menu
+        Action {
+            text: "remove"
+            onTriggered: {
+                songListView.model.removeFromSongSheet(songListView.songSheetId, songListView.selectedItems)
+                songListView.selectedItems = [];
+                songListView.updateIndex();
+            }
+        }
+    }
+
+    ScrollBar.vertical: ScrollBar {
+        hoverEnabled: true
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        policy: ScrollBar.AsNeeded
+    }
+
 }

@@ -1,18 +1,27 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
+import "../../../Component"
+import "../../Common"
 
 Control {
     property string text: ""
+    property var listView: null
     hoverEnabled: true
-    Text {
-        anchors.verticalCenter: parent.verticalCenter
-        verticalAlignment: Text.AlignVCenter
-        font.pixelSize: 15
-        font.bold: true
-        color: parent.hovered ? "#1827ff" : songListView.currentIndex === index ? "#ffffff" : "#b5b5b5"
+    HoverableText {
+        anchors.right: songControl.left
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
         text: parent.text
+        color: hovered ? "#1827ff" : listView.currentIndex === index ? "#ffffff" : "#b5b5b5"
     }
+
     Rectangle {
+        id: songControl
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.top: parent.top
@@ -21,61 +30,40 @@ Control {
         anchors.rightMargin: 0
         color: "#00000000"
         width: 125
-        visible: (parent.hovered || songListView.currentIndex === index) ? true : false
-        Button {
+        visible: (parent.hovered || listView.currentIndex === index) ? true : false
+        PlayToolTipButton {
             id: playBtn
-            width: 25
-            height: 20
             anchors.left: parent.left
             anchors.leftMargin: 0
-            anchors.verticalCenter: parent.verticalCenter
-            hoverEnabled: true
-            background: Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: parent.hovered ? "qrc:/icon/playButton_hover.png" : "qrc:/icon/playButton.png"
+            onSignal_clicked: {
+                listView.playIndex(index);
             }
         }
-        Button {
+        AddToToolTipButton {
             id: addToBtn
-            width: 25
-            height: 20
             anchors.left: playBtn.right
             anchors.leftMargin: 5
-            anchors.verticalCenter: parent.verticalCenter
-            hoverEnabled: true
-            background: Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: parent.hovered ? "qrc:/icon/addTo_hover.png" : "qrc:/icon/addTo.png"
+            onSignal_clicked: {
+                if(listView.selectedItems.indexOf(index) === -1)
+                    listView.selectedItems = [index];
+                listView.currentIndex = index
+                addToMenu.disable([listView.songSheetId]);
+                var global = mapToGlobal(mouse.x, mouse.y);
+                addToMenu.popup(main, global.x, global.y);
             }
         }
-        Button {
+        ToolTipButton {
             id: downloadBtn
-            width: 25
-            height: 20
             anchors.left: addToBtn.right
             anchors.leftMargin: 5
             anchors.verticalCenter: parent.verticalCenter
-            hoverEnabled: true
-            background: Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: parent.hovered ? "qrc:/icon/download_hover.png" : "qrc:/icon/download.png"
-            }
+            tipText: qsTr("下载")
+            normalIcon: "qrc:/icon/download.png"
+            hoveredIcon: "qrc:/icon/download_hover.png"
         }
-        Button {
-            width: 25
-            height: 20
+        MoreToolTipButton {
             anchors.left: downloadBtn.right
             anchors.leftMargin: 5
-            anchors.verticalCenter: parent.verticalCenter
-            hoverEnabled: true
-            background: Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: parent.hovered ? "qrc:/icon/more_hover.png" : "qrc:/icon/more.png"
-            }
         }
     }
     anchors.bottom: parent.bottom

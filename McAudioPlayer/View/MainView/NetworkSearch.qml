@@ -5,6 +5,10 @@ import "../../Component"
 
 Item {
     height: 25
+    signal signal_netSearch(string musicSrc, string keyword)
+    signal signal_entrySearch()
+    signal signal_cancelSearch()
+
     Button {
         id: netEntrySearch
         width: 16
@@ -64,10 +68,13 @@ Item {
         anchors.left: musicSourceCombo.right
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        placeholderText: "搜索音乐、歌手..."
+        placeholderText: qsTr("搜索音乐、歌手...")
         background: Rectangle {
             radius: 10
             color: "#c7c7c7"
+        }
+        onAccepted: {
+            startSearch();
         }
     }
 
@@ -81,8 +88,16 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         visible: false
         onClicked: {
-            console.log(qsTr("搜索"));
+            startSearch();
         }
+    }
+
+    function startSearch(){
+        var musicSrc = musicSourceCombo.currentText;
+        var keyword = netSearchInput.text;
+        if(musicSrc === "" || keyword === "")
+            return;
+        signal_netSearch(musicSrc, keyword);
     }
 
     function entrySearch(){
@@ -91,6 +106,9 @@ Item {
         netSearchInput.visible = true;
         musicSourceCombo.visible = true;
         netSearchBtn.visible = true;
+        netSearchInput.text = "";
+        netSearchInput.forceActiveFocus();
+        signal_entrySearch();
     }
 
     function cancelSearch(){
@@ -99,5 +117,6 @@ Item {
         netSearchInput.visible = false;
         musicSourceCombo.visible = false;
         netSearchBtn.visible = false;
+        signal_cancelSearch();
     }
 }

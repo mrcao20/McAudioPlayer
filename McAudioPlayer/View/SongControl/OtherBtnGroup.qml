@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import "../../Component"
+import "../Playlist"
+import "../MediaPlayer"
 
 Item {
     id: element
@@ -41,13 +43,24 @@ Item {
         id: playOrderBtn
         width: 20
         height: 20
-        text: qsTr("Button")
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: volumeBtn.left
         anchors.rightMargin: 6
         background: Image {
             anchors.fill: parent
-            source: parent.hovered ? "qrc:/icon/shuffle_hover.png" : "qrc:/icon/shuffle.png"
+            source: {
+                switch(mediaPlayer.playMode){
+                case MediaPlayer.PlayMode.Shuffle:
+                    return parent.hovered ? "qrc:/icon/shuffle_hover.png" : "qrc:/icon/shuffle.png";
+                case MediaPlayer.PlayMode.Repeat:
+                    return parent.hovered ? "qrc:/icon/repeat_hover.png" : "qrc:/icon/repeat.png";
+                case MediaPlayer.PlayMode.Single:
+                    return parent.hovered ? "qrc:/icon/single_hover.png" : "qrc:/icon/single.png";
+                }
+            }
+        }
+        onClicked: {
+            mediaPlayer.playMode = mediaPlayer.playMode === MediaPlayer.PlayMode.Single ? 0 : mediaPlayer.playMode + 1;
         }
     }
 
@@ -55,7 +68,6 @@ Item {
         id: volumeBtn
         width: 24
         height: 24
-        text: qsTr("Button")
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: playlistBtn.left
         anchors.rightMargin: 6
@@ -85,16 +97,25 @@ Item {
                     anchors.fill: parent
                     source: playlistBtn.hovered ? "qrc:/icon/playlist_hover.png" : "qrc:/icon/playlist.png"
                 }
+                onClicked: {
+                    playlistBtn.clickPlaylist();
+                }
             }
             LabelButton {
                 id: playListNum
-                text: qsTr("0")
+                text: playlist.musicNum
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: playListImg.right
                 anchors.leftMargin: 0
                 horizontalAlignment: Text.AlignLeft
                 hoverableItem: playlistBtn
+                onClicked: {
+                    playlistBtn.clickPlaylist();
+                }
             }
+        }
+        function clickPlaylist(){
+            playlist.visibleChanged();
         }
     }
 }

@@ -15,7 +15,7 @@ Item {
         Label {
             id: songNameLabel
             color: "#787878"
-            text: qsTr("Label")
+            text: main.curMusic === null ? qsTr("无音乐") : main.curMusic.songTitle
             font.pixelSize: 15
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -34,7 +34,11 @@ Item {
             width: 101
             height: 21
             color: "#787878"
-            text: qsTr("Label")
+            text: {
+                var pos = mediaPlayer.position;
+                var dur = mediaPlayer.duration;
+                return new Date(pos).toLocaleString(Qt.locale("de_DE"), "mm:ss") + "/" + new Date(dur).toLocaleString(Qt.locale("de_DE"), "mm:ss");
+            }
             font.pixelSize: 15
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter

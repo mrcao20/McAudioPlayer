@@ -3,6 +3,30 @@ import QtQuick.Controls 2.5
 import "../../Component"
 
 Item {
+
+    property string songSheet: ""
+    property int songNum: 0
+
+    signal signal_filterTextChanged(string text)
+    signal signal_lastPageClicked()
+    signal signal_nextPageClicked()
+
+    function clear(){
+        searchInput.text = "";
+    }
+
+    function entryNetSearch(){
+        lastPageBtn.visible = true;
+        nextPageBtn.visible = true;
+        searchInput.visible = false;
+    }
+
+    function cancelNetSearch(){
+        lastPageBtn.visible = false;
+        nextPageBtn.visible = false;
+        searchInput.visible = true;
+    }
+
     height: 25
     LabelButton {
         id: lastPageBtn
@@ -13,6 +37,7 @@ Item {
         anchors.leftMargin: 0
         anchors.verticalCenter: parent.verticalCenter
         text: qsTr("back")
+        onClicked: signal_lastPageClicked();
     }
 
     LabelButton {
@@ -24,12 +49,13 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: lastPageBtn.right
         anchors.leftMargin: 6
+        onClicked: signal_nextPageClicked();
     }
 
     Label {
         id: curSongListLabel
         color: "#ffffff"
-        text: qsTr("default")
+        text: songSheet
         anchors.horizontalCenterOffset: -50
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -42,7 +68,7 @@ Item {
         id: songNumLabel
         y: 9
         color: "#ffffff"
-        text: qsTr("212")
+        text: songNum
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: curSongListLabel.right
         anchors.leftMargin: 10
@@ -66,5 +92,8 @@ Item {
         }
         font.pixelSize: 14
         anchors.leftMargin: 10
+        onTextChanged: {
+            signal_filterTextChanged(text);
+        }
     }
 }

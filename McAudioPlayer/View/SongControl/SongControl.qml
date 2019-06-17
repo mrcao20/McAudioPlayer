@@ -4,6 +4,8 @@ import QtQuick.Controls 2.5
 Item {
     y: 487
     height: 104
+    signal signal_playLastMusic();
+    signal signal_playNextMusic();
     CtrlBtnGroup {
         id: ctrlBtnGroup
         anchors.bottom: parent.bottom

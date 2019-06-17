@@ -24,6 +24,10 @@ public:
 		: McRestResponse(true, "", payload)
 	{}
 
+	static McRestResponse<QString> ok() noexcept {
+		return McRestResponse<QString>("");
+	}
+
 	static McRestResponse ok(const T &payload) noexcept {
 		return McRestResponse(payload);
 	}

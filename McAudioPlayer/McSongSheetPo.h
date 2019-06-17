@@ -3,16 +3,16 @@
 
 #include "McGlobal.h"
 
-class McMusicPo;
+class McSonglistPo;
 
 class McSongSheetPo {
-	typedef std::shared_ptr<McMusicPo> McMusicPo_ptr;
-	typedef qx::QxCollection<long, McMusicPo_ptr> list_McMusicPo;
+	typedef std::shared_ptr<McSonglistPo> McSonglistPo_ptr;
+	typedef qx::QxCollection<long, McSonglistPo_ptr> list_McSonglistPo;
 public:
 	long m_songlistIndex;
 	QString m_songlistSection;
 	QString m_songlistName;
-	list_McMusicPo m_musics;
+	list_McSonglistPo m_songlist;
 
 	virtual ~McSongSheetPo() = default;
 };

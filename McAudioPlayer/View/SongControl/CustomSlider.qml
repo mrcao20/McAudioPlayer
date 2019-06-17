@@ -9,7 +9,7 @@ Slider {
     anchors.right: parent.right
     anchors.rightMargin: 0
     height: handle.height
-    value: 0
+    value: mediaPlayer.position / mediaPlayer.duration
     background: Rectangle {
         x: progressBar.leftPadding
         y: progressBar.topPadding + progressBar.availableHeight / 2 - height / 2
@@ -47,5 +47,10 @@ Slider {
             anchors.fill: parent
             source: "qrc:/icon/Slider_handle.png"
         }
+    }
+
+    onMoved: {
+        var targetPos = value * mediaPlayer.duration;
+        mediaPlayer.position = targetPos;
     }
 }

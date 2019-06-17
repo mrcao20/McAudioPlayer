@@ -12,6 +12,9 @@ Item {
         background: Image {
             source: parent.hovered ? "qrc:/icon/previous_hover.png" : "qrc:/icon/previous.png"
         }
+        onClicked: {
+            signal_playLastMusic();
+        }
     }
 
     Button {
@@ -23,7 +26,11 @@ Item {
         anchors.leftMargin: 6
         anchors.verticalCenter: parent.verticalCenter
         background: Image {
-            source: parent.hovered ? "qrc:/icon/play_hover.png" : "qrc:/icon/play.png"
+            source: parent.hovered ? (mediaPlayer.isPlaying ? "qrc:/icon/pause_hover.png" : "qrc:/icon/play_hover.png")
+                                   : (mediaPlayer.isPlaying ? "qrc:/icon/pause.png" : "qrc:/icon/play.png")
+        }
+        onClicked: {
+            mediaPlayer.isPlaying ? mediaPlayer.pause() : mediaPlayer.play();
         }
     }
 
@@ -37,6 +44,9 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         background: Image {
             source: parent.hovered ? "qrc:/icon/next_hover.png" : "qrc:/icon/next.png"
+        }
+        onClicked: {
+            signal_playNextMusic();
         }
     }
 }

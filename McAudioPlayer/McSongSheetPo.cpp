@@ -1,6 +1,6 @@
 #include "McSongSheetPo.h"
 
-#include "McMusicPo.h"
+#include "McSonglistPo.h"
 
 QX_REGISTER_CPP_QX_DAO(McSongSheetPo)
 
@@ -12,6 +12,6 @@ namespace qx {
 		t.data(&McSongSheetPo::m_songlistSection, "songlist_section");
 		t.data(&McSongSheetPo::m_songlistName, "songlist_name");
 
-		t.relationManyToMany(&McSongSheetPo::m_musics, "list_McMusicPo", "t_songlist_info", "songlist_index", "song_index");
+		t.relationOneToMany(&McSongSheetPo::m_songlist, "list_McSonglistPo", "songlist_index");
 	}
 }
