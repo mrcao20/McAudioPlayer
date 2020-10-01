@@ -40,6 +40,7 @@ HEADERS += \
     include/McAudioPlayer/Domain/Vo/McArtist.h \
     include/McAudioPlayer/Domain/Vo/McMusic.h \
     include/McAudioPlayer/Domain/Vo/McSongSheet.h \
+    include/McAudioPlayer/McExceptionFilter.h \
     include/McAudioPlayer/McGlobal.h \
     include/McAudioPlayer/McMacroDefines.h \
     include/McAudioPlayer/Model/IMcMusicModel.h \
@@ -96,6 +97,7 @@ SOURCES += \
         src/Domain/Vo/McArtist.cpp \
         src/Domain/Vo/McMusic.cpp \
         src/Domain/Vo/McSongSheet.cpp \
+        src/McExceptionFilter.cpp \
         src/McGlobal.cpp \
         src/Model/McMusicModel.cpp \
         src/Model/McNetworkMusicModel.cpp \
@@ -146,6 +148,9 @@ CONFIG(debug, debug|release) {
 
 MOC_DIR = $$PWD/moc
 
+LIBS += -lDbghelp
+LIBS += -luser32
+
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../McIocBoot/bin/ -lMcIocContainer
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../McIocBoot/bin/ -lMcIocContainerd
 else:unix:!macx: LIBS += -L$$PWD/../McIocBoot/bin/ -lMcIocContainer
@@ -160,14 +165,22 @@ else:unix:!macx: LIBS += -L$$PWD/../McIocBoot/bin/ -lMcIocBoot
 INCLUDEPATH += $$PWD/../McIocBoot/McIocBoot/include
 DEPENDPATH += $$PWD/../McIocBoot/McIocBoot/include
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../GitHub/Download/QxOrm/lib/ -lQxOrm
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../GitHub/Download/QxOrm/lib/ -lQxOrmd
-
-INCLUDEPATH += $$PWD/../../GitHub/Download/QxOrm/include
-DEPENDPATH += $$PWD/../../GitHub/Download/QxOrm/include
-
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../McLogQt/bin/ -lMcLogQt
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../McLogQt/bin/ -lMcLogQtd
 
 INCLUDEPATH += $$PWD/../McLogQt/McLogQt/include
 DEPENDPATH += $$PWD/../McLogQt/McLogQt/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Download/GitHub/QxOrm/lib/ -lQxOrm
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Download/GitHub/QxOrm/lib/ -lQxOrmd
+
+INCLUDEPATH += $$PWD/../../Download/GitHub/QxOrm/include
+DEPENDPATH += $$PWD/../../Download/GitHub/QxOrm/include
+
+msvc {
+    QMAKE_CFLAGS += /utf-8
+    QMAKE_CXXFLAGS += /utf-8
+}
+
+QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO

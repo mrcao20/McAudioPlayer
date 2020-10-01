@@ -66,7 +66,7 @@ Item {
 
     Connections {
         target: netSearch
-        onSignal_netSearch: {
+        function onSignal_netSearch(musicSrc, keyword) {
             songInfo.songSheet = musicSrc;
             searchKeyword = keyword;
             if(songListView.status === Loader.Ready && songListView.item.objectName !== "NetworkSonglistView")
@@ -75,11 +75,11 @@ Item {
                 songListView.item.search(musicSrc, keyword);
         }
 
-        onSignal_entrySearch: {
+        function onSignal_entrySearch() {
             songInfo.entryNetSearch();
         }
 
-        onSignal_cancelSearch: {
+        function onSignal_cancelSearch() {
             songInfo.cancelNetSearch();
             updateSongList(songSheetId, songSheet);
         }
@@ -87,17 +87,17 @@ Item {
 
     Connections {
         target: songInfo
-        onSignal_filterTextChanged: {
+        function onSignal_filterTextChanged(text) {
             songListView.item.filterText = text;
         }
 
-        onSignal_lastPageClicked: {
+        function onSignal_lastPageClicked() {
             if(songListView.status !== Loader.Ready || songListView.item.objectName !== "NetworkSonglistView")
                 return;
             songListView.item.searchLast();
         }
 
-        onSignal_nextPageClicked: {
+        function onSignal_nextPageClicked() {
             if(songListView.status !== Loader.Ready || songListView.item.objectName !== "NetworkSonglistView")
                 return;
             songListView.item.searchNext();

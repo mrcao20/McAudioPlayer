@@ -18,6 +18,7 @@
 
 #include "McAudioPlayer/version.h"
 #include "McAudioPlayer/McGlobal.h"
+#include "McAudioPlayer/McExceptionFilter.h"
 
 QString commandLineFilePathArgument() {
 	const QStringList args = QCoreApplication::arguments();
@@ -30,7 +31,9 @@ QString commandLineFilePathArgument() {
 
 int main(int argc, char *argv[])
 {
-    return McIocBoot::singleRun<McSingleApplication>(argc, argv, QUrl(QStringLiteral("qrc:/main.qml"))
+    SetUnhandledExceptionFilter(ExceptionFilter);
+    
+    return McIocBoot::singleRun<McSingleApplication>(argc, argv, QStringLiteral("qrc:/main.qml")
         , [](McSingleApplication *app, QQmlApplicationEngine *engine){
         
         // Parameters to connect to database
@@ -67,8 +70,8 @@ int main(int argc, char *argv[])
     }
     , [](McSingleApplication *app){
         QString logPath = QDir(app->applicationDirPath()).filePath(MC_LOG_CONFIG_PATH);
-        McLogManager::installQtMessageHandler();
         McXMLConfigurator::configure(logPath);
+        McLogManager::installQtMessageHandler();
         
         qInfo() << "log config path" << logPath;
     });

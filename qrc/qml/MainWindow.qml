@@ -2,8 +2,8 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import Qt.labs.platform 1.1 as LabsPlatform
-import QtQuick.Controls 2.5 as Controls
-import Qt.labs.settings 1.0
+import QtQuick.Controls 2.12 as Controls
+import Qt.labs.settings 1.1
 import "./View/MediaPlayer"
 import "./View/SongSheet"
 import "./View/MainView"
@@ -38,6 +38,7 @@ Window {
         mediaPlayer.source = curMusic.songUrl;
     }
     
+    //! @disable-check M16
     onClosing: {
         close.accepted = false
         hide();

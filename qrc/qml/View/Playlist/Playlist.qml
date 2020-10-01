@@ -47,7 +47,7 @@ Rectangle {
         setCurrentIndex(index);
         //! 不需要使用syncThen，因为没有使用JSEngine的任何东西，而curMusic对其他item来说都是属性
         //! 绑定的形式的被动更新，不存在资源抢占的情况
-        $.get("playlist.getMusic?index=" + playlistView.currentIndex).then(function(result) {
+        $.get("playlist.getMusic?index=" + playlistView.currentIndex).syncThen(function(result) {
             rect.curMusic = result;
         });
     }
@@ -126,7 +126,7 @@ Rectangle {
         }
 
         delegate: Control {
-            width: parent.width
+            width: rect.width
             height: 40
             hoverEnabled: true
             background: Rectangle {

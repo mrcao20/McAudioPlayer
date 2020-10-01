@@ -3,6 +3,7 @@
 #include <QObject>
 
 #include <QList>
+#include <QUrl>
 
 #include <McIoc/McGlobal.h>
 

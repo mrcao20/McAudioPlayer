@@ -91,7 +91,7 @@ ListView {
 
     delegate: Control {
         visible: songName.indexOf(songListView.filterText) !== -1 ? true : false
-        width: parent.width
+        width: songListView.width
         height: visible ? 29 : 0
         hoverEnabled: true
         background: Rectangle {
