@@ -1,5 +1,7 @@
 QT += quick
 
+TARGET = McAudioPlayer
+
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -23,6 +25,10 @@ SOURCES += \
 RESOURCES += \
     qrc/icon/icon.qrc \
     qrc/qml/qml.qrc
+    
+win32 {
+    RC_ICONS = qrc/icon/format.ico
+}
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

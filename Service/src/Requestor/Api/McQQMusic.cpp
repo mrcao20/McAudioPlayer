@@ -3,6 +3,9 @@
 #include <QJsonValue>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QJSEngine>
+#include <QTextStream>
+#include <QFile>
 
 #include "Service/Domain/Vo/McMusic.h"
 #include "Service/Utils/McNetUtils.h"
@@ -11,9 +14,8 @@
 #include "Service/Domain/Vo/McMusic.h"
 #include "Service/McGlobal.h"
 
-#define VKEY "https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?g_tk=1109981464&loginUin=839566521&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0&cid=205361747&uin=839566521&songmid=%1&filename=%2.m4a&guid=2054016189"
-#define SONG "http://dl.stream.qqmusic.qq.com/%1.m4a?vkey=%2&guid=2054016189&uin=839566521&fromtag=66"
-#define SEARCH "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?ct=24&qqmusic_ver=1298&new_json=1&remoteplace=txt.yqq.song&searchid=71813867590975010&t=0&aggr=1&cr=1&catZhida=1&lossless=0&flag_qc=0&n=%1&p=%2&w=%3&g_tk=5381&jsonpCallback=MusicJsonCallback031135166293541294&loginUin=0&hostUin=0&format=jsonp&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
+#define VKEY R"(https://u.y.qq.com/cgi-bin/musics.fcg?-=getplaysongvkey9598309114468244&g_tk=1319104027&sign=%1&loginUin=839566521&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0&data=%2)"
+#define SEARCH "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?ct=24&qqmusic_ver=1298&new_json=1&remoteplace=txt.yqq.top&searchid=31493809849558127&t=0&aggr=1&cr=1&catZhida=1&lossless=0&flag_qc=0&n=%1&p=%2&w=%3&g_tk_new_20200303=1319104027&g_tk=1319104027&loginUin=839566521&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0"
 
 MC_DECL_PRIVATE_DATA(McQQMusic)
 MC_DECL_PRIVATE_DATA_END
@@ -32,20 +34,42 @@ McQQMusic::~McQQMusic() noexcept {
 
 QString McQQMusic::getUrl(McMusicConstPtrRef music) noexcept {
     QString songMid = music->getSongMid();
-    QString fileName = "C400" + songMid;
-    QString vkey = QString(VKEY).arg(songMid).arg(fileName);
-    QByteArray json = McNetUtils::getNetworkData(vkey);
-    QString key = getJsonValue(json, "data.items.vkey").toString();
-    return QString(SONG).arg(fileName).arg(key);
+    QString data = QString(R"({"req_0":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"7176926105","songmid":["%1"],"songtype":[0],"uin":"839566521","loginflag":1,"platform":"20"}},"comm":{"uin":839566521,"format":"json","ct":24,"cv":0}})")
+            .arg(songMid);
+    QJSEngine jsEngine;
+    QFile file(":/QQSignGenerator.js");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream stream(&file);
+    QString js = stream.readAll();
+    jsEngine.evaluate(js);
+    auto funcValue = jsEngine.globalObject().property("getSign");
+    auto jsValue = funcValue.call(QJSValueList() << data);
+    auto reqUrl = QString(VKEY).arg(jsValue.toString(), data.toLocal8Bit().toPercentEncoding());
+    QByteArray json = McNetUtils::getNetworkData(reqUrl);
+    if(json.isEmpty()) {
+        qInfo() << "get qq music url returned empty";
+        return "";
+    }
+    auto dataObj = getJsonValue(json, "req_0.data").toObject();
+    auto midurlinfo = getJsonValue(dataObj, "midurlinfo").toArray();
+    auto purl = getJsonValue(midurlinfo.first().toObject(), "purl").toString();
+    auto filename = getJsonValue(midurlinfo.first().toObject(), "filename").toString();
+    auto sip = getJsonValue(dataObj, "sip").toArray().first().toString();
+    QString url;
+    if(purl.isEmpty()) {
+        url = sip + filename;
+    } else {
+        url = sip + purl;
+    }
+    return url;
 }
 
 QList<McMusicPtr> McQQMusic::getMusics(const QString& songName, int limit, int offset) noexcept {
     QList<McMusicPtr> musics;
     musics.reserve(limit);
     int page = offset / limit + 1;
-    QByteArray json = McNetUtils::getNetworkData(QString(SEARCH).arg(limit).arg(page).arg(songName));
-    json.replace("MusicJsonCallback031135166293541294(", "");
-    json.remove(json.size() - 1, 1);
+    QString searchUrl = QString(SEARCH).arg(limit).arg(page).arg(songName);
+    QByteArray json = McNetUtils::getNetworkData(searchUrl);
     QJsonArray jsonArray = getJsonValue(json, "data.song.list").toArray();
     for (auto itr = jsonArray.begin(); itr != jsonArray.end(); itr++) {
         QJsonObject jsonObject = itr->toObject();

@@ -49,6 +49,10 @@ QByteArray McNetUtils::getNetworkData(QNetworkReply *reply) noexcept {
 	QEventLoop loop;
 	connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
 	loop.exec();
+    if(reply->error() != QNetworkReply::NoError) {
+        qCritical() << "http  request occurred error:" << reply->error()
+                    << "error str:" << reply->errorString();
+    }
 	QByteArray data = reply->readAll();
 	closeReply(reply);
 	return data;

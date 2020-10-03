@@ -1,5 +1,5 @@
 QT -= gui
-QT += sql network concurrent av
+QT += sql network concurrent av qml
 
 TARGET = $$qt5LibraryTarget($$TARGET)
 
@@ -63,3 +63,6 @@ msvc {
 
 QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
 QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+
+RESOURCES += \
+    qrc/qrc.qrc
