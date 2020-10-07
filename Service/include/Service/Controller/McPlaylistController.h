@@ -20,7 +20,8 @@ class McPlaylistController : public QObject {
     MC_DEFINE_TYPELIST(QObject)
     MC_CONTROLLER
     MC_BEANNAME("playlist")
-    Q_PROPERTY(IMcPlaylistServicePtr playlistService READ playlistService WRITE setPlaylistService USER true)
+    MC_AUTOWIRED("playlistService")
+    Q_PROPERTY(IMcPlaylistServicePtr playlistService READ playlistService WRITE setPlaylistService)
 public:
     Q_INVOKABLE McPlaylistController() noexcept;
     ~McPlaylistController() noexcept;

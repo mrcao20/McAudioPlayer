@@ -15,10 +15,12 @@ class McPlaylistService : public QObject, public IMcPlaylistService {
     MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcPlaylistService))
     MC_SERVICE
     MC_BEANNAME("playlistService")
-    Q_CLASSINFO("model", "playlistModel")
-    Q_PROPERTY(IMcMusicServicePtr musicService READ musicService WRITE setMusicService USER true)
+    MC_AUTOWIRED("musicService")
+    Q_PROPERTY(IMcMusicServicePtr musicService READ musicService WRITE setMusicService)
+    MC_AUTOWIRED("model = playlistModel")
     Q_PROPERTY(IMcPlaylistModelPtr model READ model WRITE setModel)
-    Q_PROPERTY(IMcPlaylistDaoPtr playlistDao READ playlistDao WRITE setPlaylistDao USER true)
+    MC_AUTOWIRED("playlistDao")
+    Q_PROPERTY(IMcPlaylistDaoPtr playlistDao READ playlistDao WRITE setPlaylistDao)
 public:
     Q_INVOKABLE McPlaylistService() noexcept;
     ~McPlaylistService() noexcept override;

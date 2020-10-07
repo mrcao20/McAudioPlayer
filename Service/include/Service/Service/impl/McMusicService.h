@@ -13,7 +13,8 @@ class McMusicService : public QObject, public IMcMusicService {
     MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcMusicService))
     MC_SERVICE
     MC_BEANNAME("musicService")
-    Q_PROPERTY(IMcMusicDaoPtr musicDao READ musicDao WRITE setMusicDao USER true)
+    MC_AUTOWIRED("musicDao")
+    Q_PROPERTY(IMcMusicDaoPtr musicDao READ musicDao WRITE setMusicDao)
 public:
     Q_INVOKABLE McMusicService() noexcept;
     ~McMusicService() noexcept override;

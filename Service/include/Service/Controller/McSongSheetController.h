@@ -22,8 +22,10 @@ class McSongSheetController : public QObject {
     MC_DEFINE_TYPELIST(QObject)
     MC_CONTROLLER
     MC_BEANNAME("songSheet")
-    Q_PROPERTY(IMcSongSheetServicePtr songSheetService READ songSheetService WRITE setSongSheetService USER true)
-    Q_PROPERTY(IMcSonglistServicePtr songlistService READ songlistService WRITE setSonglistService USER true)
+    MC_AUTOWIRED("songSheetService")
+    Q_PROPERTY(IMcSongSheetServicePtr songSheetService READ songSheetService WRITE setSongSheetService)
+    MC_AUTOWIRED("songlistService")
+    Q_PROPERTY(IMcSonglistServicePtr songlistService READ songlistService WRITE setSonglistService)
 public:
     Q_INVOKABLE McSongSheetController() noexcept;
     ~McSongSheetController() noexcept;

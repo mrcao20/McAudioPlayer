@@ -14,9 +14,10 @@ class McSongSheetService : public QObject, public IMcSongSheetService {
     MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcSongSheetService))
     MC_SERVICE
     MC_BEANNAME("songSheetService")
-    Q_CLASSINFO("model", "songSheetModel")
+    MC_AUTOWIRED("model = songSheetModel")
     Q_PROPERTY(IMcSongSheetModelPtr model READ model WRITE setModel)
-    Q_PROPERTY(IMcSongSheetDaoPtr songSheetDao READ songSheetDao WRITE setSongSheetDao USER true)
+    MC_AUTOWIRED("songSheetDao")
+    Q_PROPERTY(IMcSongSheetDaoPtr songSheetDao READ songSheetDao WRITE setSongSheetDao)
 public:
     Q_INVOKABLE McSongSheetService() noexcept;
     ~McSongSheetService() noexcept override;

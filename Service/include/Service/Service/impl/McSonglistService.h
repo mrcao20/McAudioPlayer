@@ -16,11 +16,14 @@ class McSonglistService : public QObject, public IMcSonglistService {
     MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcSonglistService))
     MC_SERVICE
     MC_BEANNAME("songlistService")
-    Q_CLASSINFO("model", "songlistModel")
+    MC_AUTOWIRED("model = songlistModel")
     Q_PROPERTY(IMcSonglistModelPtr model READ model WRITE setModel)
-    Q_PROPERTY(IMcNetworkMusicServicePtr networkMusicService READ networkMusicService WRITE setNetworkMusicService USER true)
-    Q_PROPERTY(IMcSonglistDaoPtr songlistDao READ songlistDao WRITE setSonglistDao USER true)
-    Q_PROPERTY(IMcNetworkMusicDaoPtr networkMusicDao READ networkMusicDao WRITE setNetworkMusicDao USER true)
+    MC_AUTOWIRED("networkMusicService")
+    Q_PROPERTY(IMcNetworkMusicServicePtr networkMusicService READ networkMusicService WRITE setNetworkMusicService)
+    MC_AUTOWIRED("songlistDao")
+    Q_PROPERTY(IMcSonglistDaoPtr songlistDao READ songlistDao WRITE setSonglistDao)
+    MC_AUTOWIRED("networkMusicDao")
+    Q_PROPERTY(IMcNetworkMusicDaoPtr networkMusicDao READ networkMusicDao WRITE setNetworkMusicDao)
 public:
     Q_INVOKABLE McSonglistService() noexcept;
     ~McSonglistService() noexcept override;

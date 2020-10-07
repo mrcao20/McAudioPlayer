@@ -21,8 +21,10 @@ class McNetworkMusicController : public QObject {
     MC_DEFINE_TYPELIST(QObject)
     MC_CONTROLLER
     MC_BEANNAME("networkMusic")
-    Q_PROPERTY(IMcNetworkMusicServicePtr networkMusicService READ networkMusicService WRITE setNetworkMusicService USER true)
-    Q_PROPERTY(IMcPlaylistServicePtr playlistService READ playlistService WRITE setPlaylistService USER true)
+    MC_AUTOWIRED("networkMusicService")
+    Q_PROPERTY(IMcNetworkMusicServicePtr networkMusicService READ networkMusicService WRITE setNetworkMusicService)
+    MC_AUTOWIRED("playlistService")
+    Q_PROPERTY(IMcPlaylistServicePtr playlistService READ playlistService WRITE setPlaylistService)
 public:
     Q_INVOKABLE McNetworkMusicController() noexcept;
     ~McNetworkMusicController() noexcept;
