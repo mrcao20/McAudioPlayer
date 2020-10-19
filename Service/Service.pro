@@ -41,14 +41,14 @@ CONFIG(debug, debug|release) {
 
 MOC_DIR = $$PWD/../moc/Service
 
-include($$PWD/../../McIocBoot/McIocBoot/McIocBootDepend.pri)
+include($$PWD/../../McQuickBoot/McQuickBoot/McQuickBootDepend.pri)
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../McIocBoot/bin/ -lMcIocBoot
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../McIocBoot/bin/ -lMcIocBootd
-else:unix:!macx: LIBS += -L$$PWD/../../McIocBoot/bin/ -lMcIocBoot
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../McQuickBoot/bin/ -lMcQuickBoot
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../McQuickBoot/bin/ -lMcQuickBootd
+else:unix:!macx: LIBS += -L$$PWD/../../McQuickBoot/bin/ -lMcQuickBoot
 
-INCLUDEPATH += $$PWD/../../McIocBoot/McIocBoot/include
-DEPENDPATH += $$PWD/../../McIocBoot/McIocBoot/include
+INCLUDEPATH += $$PWD/../../McQuickBoot/McQuickBoot/include
+DEPENDPATH += $$PWD/../../McQuickBoot/McQuickBoot/include
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../Download/GitHub/QxOrm/lib/ -lQxOrm
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../Download/GitHub/QxOrm/lib/ -lQxOrmd
