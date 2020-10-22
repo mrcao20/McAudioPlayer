@@ -5,7 +5,7 @@
 #include <QFileInfo>
 #include <QDir>
 
-#include <McBoot/McIocBoot.h>
+#include <McBoot/McQuickBoot.h>
 
 #include <Service/McGlobal.h>
 #include <Service/McVersion.h>
@@ -30,22 +30,7 @@ int main(int argc, char *argv[])
     SetUnhandledExceptionFilter(ExceptionFilter);
 #endif
     
-    return McIocBoot::singleRun<McSingleApplication>(argc, argv, QStringLiteral("qrc:/main.qml")
-        , [](McSingleApplication *app, QQmlApplicationEngine *engine){
-        
-        McAudioPlayerService::load();
-        
-        app->setOrganizationName("mrcao");
-        app->setOrganizationDomain("mrcao.mc");
-        app->setApplicationName("McAudioPlayer");
-        app->setApplicationVersion(VERSION_STR);
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/icon/AudioPlayer.png"), QSize(), QIcon::Normal, QIcon::Off);
-        app->setWindowIcon(icon);
-        
-        QObject::connect(engine, SIGNAL(quit()), app, SLOT(quit()));
-    }
-    , [](McSingleApplication *app){
+    McQuickBoot::setPreInitFunc([](QCoreApplication *app){
         QString logPath = QDir(app->applicationDirPath()).filePath(MC_LOG_CONFIG_PATH);
 #ifndef QT_DEBUG
         McXMLConfigurator::configure(logPath);
@@ -54,4 +39,18 @@ int main(int argc, char *argv[])
         
         qInfo() << "log config path" << logPath;
     });
+    McQuickBoot::setAfterInitFunc([](QCoreApplication *app, QQmlApplicationEngine *engine){
+        McAudioPlayerService::load();
+        
+        app->setOrganizationName("mrcao");
+        app->setOrganizationDomain("mrcao.mc");
+        app->setApplicationName("McAudioPlayer");
+        app->setApplicationVersion(VERSION_STR);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/icon/AudioPlayer.png"), QSize(), QIcon::Normal, QIcon::Off);
+        static_cast<QGuiApplication *>(app)->setWindowIcon(icon);
+        
+        QObject::connect(engine, SIGNAL(quit()), app, SLOT(quit()));
+    });
+    return McQuickBoot::singleRun(argc, argv);
 }
