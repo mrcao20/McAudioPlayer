@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<!-- 常用配置 [%{time yyyy-MM-dd hh:mm:ss,zzz}][%{category}][%{type}]: %{message}  [File:%{file}] [Line:%{line}] [Function:%{function}] -->
+	<bean name="normalLayout" class="McNormalLayout"></bean>
+	
+	<bean name="rollingFile" class="McDailyRollingFileAppender">
+        <property name="threshold" value="warn-"></property>
+		<property name="backupDirPath" value="./log/backup/"></property>
+		<property name="backupDirPattern" value="%{time yyyy-MM-dd}"></property>
+		<property name="dirPath" value="./log/"></property>
+		<property name="fileNamePattern" value="log_%{time yyyy-MM-dd_hh-mm-ss}.log"></property>
+		<property name="layout" ref="normalLayout"></property>
+    </bean>
+	
+	<bean name="logger" class="McLogger">
+		<property name="appenders">
+			<list>
+				<ref bean="rollingFile" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 必须有一个名为defaultLoggerRepository的bean -->
+	<bean name="defaultLoggerRepository" class="McLoggerRepository">
+		<map name="loggers">
+			<entry>
+				<key>default</key>
+				<value><ref bean="logger" /></value>
+			</entry>
+			<entry>
+				<key>qml</key>
+				<value><ref bean="logger" /></value>
+			</entry>
+		</map>
+	</bean>
+</beans>

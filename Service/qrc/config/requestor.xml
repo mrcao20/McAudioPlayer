@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean name="requestor" class="McNetMusicRequestor">
+        <map name="musicApis">
+            <entry>
+                <key><value>qqmusic</value></key>
+                <value><ref>qqMusic</ref></value>
+            </entry>
+            <entry>
+                <key><value>ymusic</value></key>
+                <value><ref>yMusic</ref></value>
+            </entry>
+        </map>
+    </bean>
+	<bean name="qqMusic" class="McQQMusic"></bean>
+	<bean name="yMusic" class="McYMusic"></bean>
+</beans>
