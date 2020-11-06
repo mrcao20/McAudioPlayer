@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Component/AddToAction.qml</file>
+        <file>Component/HoverableText.qml</file>
+        <file>Component/JSONListModel.qml</file>
+        <file>Component/jsonpath.js</file>
+        <file>Component/LabelButton.qml</file>
+        <file>Component/ToolTipButton.qml</file>
+        <file>View/Common/AddToToolTipButton.qml</file>
+        <file>View/Common/ListViewDelegateMouseArea.qml</file>
+        <file>View/Common/MoreToolTipButton.qml</file>
+        <file>View/Common/PlayToolTipButton.qml</file>
+        <file>View/MainView/MainView.qml</file>
+        <file>View/MainView/NetworkSearch.qml</file>
+        <file>View/MainView/SongInfo.qml</file>
+        <file>View/MainView/NetworkSonglistView/NetworkSonglistView.qml</file>
+        <file>View/MainView/SongListView/HeaderLabel.qml</file>
+        <file>View/MainView/SongListView/InfoControl.qml</file>
+        <file>View/MainView/SongListView/MainControl.qml</file>
+        <file>View/MainView/SongListView/SongListView.qml</file>
+        <file>View/MediaPlayer/MediaPlayer.qml</file>
+        <file>View/Playlist/DelegateItem.qml</file>
+        <file>View/Playlist/HeaderItem.qml</file>
+        <file>View/Playlist/Playlist.qml</file>
+        <file>View/SongControl/CtrlBtnGroup.qml</file>
+        <file>View/SongControl/CustomSlider.qml</file>
+        <file>View/SongControl/Middle.qml</file>
+        <file>View/SongControl/OtherBtnGroup.qml</file>
+        <file>View/SongControl/SongControl.qml</file>
+        <file>View/SongSheet/SongSheet.qml</file>
+        <file>McSplashScreen.qml</file>
+        <file>MainWindow.qml</file>
+    </qresource>
+</RCC>
