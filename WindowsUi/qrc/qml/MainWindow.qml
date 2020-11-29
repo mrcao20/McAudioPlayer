@@ -56,9 +56,11 @@ Window {
         id: mediaPlayer
         
         autoPlay: true
-        onStopped: {
-            console.log("audio play finished. auto play next!");
-            playlist.playNext();
+        onPositionChanged: {
+            if(Math.abs(duration - position) < 1000) {
+                console.log("audio play finished. auto play next!");
+                playlist.playNext();
+            }
         }
     }
     

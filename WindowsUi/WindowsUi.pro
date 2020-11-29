@@ -1,4 +1,4 @@
-QT += quick
+QT += mcquickboot
 
 TARGET = McAudioPlayer
 
@@ -57,15 +57,6 @@ CONFIG(debug, debug|release) {
 }
 
 MOC_DIR = $$PWD/../moc/WindowsUi
-
-include($$PWD/../../McQuickBoot/McQuickBoot/McQuickBootDepend.pri)
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../McQuickBoot/bin/ -lMcQuickBoot
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../McQuickBoot/bin/ -lMcQuickBootd
-else:unix:!macx: LIBS += -L$$PWD/../../McQuickBoot/bin/ -lMcQuickBoot
-
-INCLUDEPATH += $$PWD/../../McQuickBoot/McQuickBoot/include
-DEPENDPATH += $$PWD/../../McQuickBoot/McQuickBoot/include
 
 INCLUDEPATH += $$PWD/../Service/include
 DEPENDPATH += $$PWD/../Service/include
