@@ -3,7 +3,7 @@
 #include "IMcMusicModel.h"
 
 class IMcSonglistModel : public IMcMusicModel {
-    MC_DEFINE_TYPELIST(MC_DECL_TYPELIST(IMcMusicModel))
+    MC_TYPELIST(IMcMusicModel)
 public:
     virtual ~IMcSonglistModel() noexcept = default;
 };

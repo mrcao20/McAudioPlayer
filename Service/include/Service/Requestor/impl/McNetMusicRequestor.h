@@ -11,7 +11,7 @@ typedef QMap<QString, IMcMusicApiPtr> McMusicApis;
 class McNetMusicRequestor : public QObject, public IMcNetMusicRequestor {
     Q_OBJECT
     MC_DECL_INIT(McNetMusicRequestor)
-    MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcNetMusicRequestor))
+    MC_TYPELIST(QObject, IMcNetMusicRequestor)
     Q_PROPERTY(McMusicApis musicApis READ musicApis WRITE setMusicApis)
 public:
     Q_INVOKABLE McNetMusicRequestor() noexcept;
@@ -21,6 +21,7 @@ public:
     void setMusicApis(const McMusicApis &val) noexcept;
     
     QString getMusicUrl(McMusicConstPtrRef music) noexcept override;
+    QString getDownloadUrl(McMusicConstPtrRef music) noexcept override;
     QList<McMusicPtr> getNetworkMusics(const QString &musicSrc, const QString &keyword) noexcept override;
     QList<McMusicPtr> getLastPageMusic() noexcept override;
     QList<McMusicPtr> getNextPageMusic() noexcept override;

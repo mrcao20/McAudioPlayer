@@ -5,7 +5,7 @@
 MC_FORWARD_DECL_CLASS(McSongSheet);
 
 class IMcSongSheetDao {
-    MC_DEFINE_TYPELIST()
+    MC_TYPELIST()
 public:
     virtual ~IMcSongSheetDao() noexcept = default;
     

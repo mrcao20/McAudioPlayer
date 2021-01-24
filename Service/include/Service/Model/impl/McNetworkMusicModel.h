@@ -12,7 +12,7 @@ class McNetworkMusicModel : public McMusicModel
     
     Q_OBJECT
     MC_DECL_INIT(McNetworkMusicModel)
-    MC_DEFINE_TYPELIST(MC_DECL_TYPELIST(McMusicModel), MC_DECL_TYPELIST(IMcNetworkMusicModel))
+    MC_TYPELIST(McMusicModel, IMcNetworkMusicModel)
     MC_MODEL
     MC_BEANNAME("networkMusicModel")
 public:

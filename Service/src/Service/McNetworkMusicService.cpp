@@ -26,7 +26,7 @@ IMcNetMusicRequestorPtr requestor;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McNetworkMusicService)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McNetworkMusicService));
+MC_REGISTER_BEAN_FACTORY(McNetworkMusicService);
 MC_INIT_END
 
 McNetworkMusicService::McNetworkMusicService() noexcept

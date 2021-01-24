@@ -14,7 +14,7 @@ IMcSonglistServicePtr songlistService;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McSongSheetController)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McSongSheetController));
+MC_REGISTER_BEAN_FACTORY(McSongSheetController);
 MC_REGISTER_LIST_CONVERTER(QList<QUrl>);
 MC_INIT_END
 

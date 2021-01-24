@@ -12,7 +12,7 @@ class McSongSheetModel : public QAbstractListModel
     
     Q_OBJECT
     MC_DECL_INIT(McSongSheetModel)
-    MC_DEFINE_TYPELIST(QAbstractListModel, MC_DECL_TYPELIST(IMcSongSheetModel))
+    MC_TYPELIST(QAbstractListModel, IMcSongSheetModel)
     MC_MODEL
     MC_BEANNAME("songSheetModel")
 public:

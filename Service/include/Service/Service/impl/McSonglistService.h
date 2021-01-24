@@ -13,7 +13,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McSonglistService);
 class McSonglistService : public QObject, public IMcSonglistService {
     Q_OBJECT
     MC_DECL_INIT(McSonglistService)
-    MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcSonglistService))
+    MC_TYPELIST(QObject, IMcSonglistService)
     MC_SERVICE
     MC_BEANNAME("songlistService")
     MC_AUTOWIRED("model = songlistModel")

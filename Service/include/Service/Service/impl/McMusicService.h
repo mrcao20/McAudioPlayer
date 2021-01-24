@@ -10,7 +10,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McMusicService);
 class McMusicService : public QObject, public IMcMusicService {
     Q_OBJECT
     MC_DECL_INIT(McMusicService)
-    MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcMusicService))
+    MC_TYPELIST(QObject, IMcMusicService)
     MC_SERVICE
     MC_BEANNAME("musicService")
     MC_AUTOWIRED("musicDao")

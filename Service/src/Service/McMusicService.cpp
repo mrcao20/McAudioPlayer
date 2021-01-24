@@ -1,15 +1,17 @@
 #include "Service/Service/impl/McMusicService.h"
 
 #include <QCoreApplication>
-#include <QDir>
 #include <QDebug>
+#include <QDir>
+#include <QtConcurrent>
 
 #include <McIoc/ApplicationContext/impl/McLocalPathApplicationContext.h>
 
-#include "Service/Requestor/IMcNetMusicRequestor.h"
 #include "Service/Dao/IMcMusicDao.h"
 #include "Service/Domain/Vo/McMusic.h"
 #include "Service/McGlobal.h"
+#include "Service/Requestor/IMcNetMusicRequestor.h"
+#include "Service/Utils/McNetUtils.h"
 
 MC_DECL_PRIVATE_DATA(McMusicService)
 IMcMusicDaoPtr musicDao;
@@ -17,7 +19,7 @@ IMcNetMusicRequestorPtr requestor;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McMusicService)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McMusicService));
+MC_REGISTER_BEAN_FACTORY(McMusicService);
 MC_INIT_END
 
 McMusicService::McMusicService() noexcept
@@ -63,4 +65,18 @@ void McMusicService::acquireMusicUrl(McMusicConstPtrRef music) noexcept {
     }
     QString url = d->requestor->getMusicUrl(music);
     music->setSongUrl(url);
+    if (music->getId() == -1) {
+        return;
+    }
+    QtConcurrent::run([this, music]() {
+        auto name = music->getSongTitle();
+        name.replace(QRegularExpression(R"([\\/:\*\?"<>\|])"), "_");
+        auto path = R"(F:\Music\)" + name + ".mp3";
+        auto downloadUrl = d->requestor->getDownloadUrl(music);
+        if (!McNetUtils::download(downloadUrl, path)) {
+            return;
+        }
+        music->setSongUrl(QUrl::fromLocalFile(path));
+        d->musicDao->updateMusicUrl(music);
+    });
 }

@@ -16,7 +16,7 @@ IMcPlaylistDaoPtr playlistDao;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McPlaylistService)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McPlaylistService));
+MC_REGISTER_BEAN_FACTORY(McPlaylistService);
 MC_INIT_END
 
 McPlaylistService::McPlaylistService() noexcept

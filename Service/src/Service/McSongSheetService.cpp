@@ -14,7 +14,7 @@ IMcSongSheetDaoPtr songSheetDao;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McSongSheetService)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McSongSheetService));
+MC_REGISTER_BEAN_FACTORY(McSongSheetService);
 MC_INIT_END
 
 McSongSheetService::McSongSheetService() noexcept

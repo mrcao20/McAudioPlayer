@@ -18,7 +18,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McNetworkMusicController);
 class McNetworkMusicController : public QObject {
     Q_OBJECT
     MC_DECL_INIT(McNetworkMusicController)
-    MC_DEFINE_TYPELIST(QObject)
+    MC_TYPELIST(QObject)
     MC_CONTROLLER
     MC_BEANNAME("networkMusic")
     MC_AUTOWIRED("networkMusicService")

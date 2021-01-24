@@ -7,7 +7,7 @@ MC_DECL_PRIVATE_DATA(McNetworkMusicModel)
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McNetworkMusicModel)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McNetworkMusicModel))
+MC_REGISTER_BEAN_FACTORY(McNetworkMusicModel)
 MC_INIT_END
 
 McNetworkMusicModel::McNetworkMusicModel() noexcept

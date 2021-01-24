@@ -7,7 +7,7 @@ MC_FORWARD_DECL_CLASS(McAlbum);
 MC_FORWARD_DECL_CLASS(McArtist);
 
 class IMcNetworkMusicDao {
-    MC_DEFINE_TYPELIST()
+    MC_TYPELIST()
 public:
     virtual ~IMcNetworkMusicDao() noexcept = default;
     

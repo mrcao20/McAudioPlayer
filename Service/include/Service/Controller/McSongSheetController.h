@@ -19,7 +19,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McSongSheetController);
 class McSongSheetController : public QObject {
     Q_OBJECT
     MC_DECL_INIT(McSongSheetController)
-    MC_DEFINE_TYPELIST(QObject)
+    MC_TYPELIST(QObject)
     MC_CONTROLLER
     MC_BEANNAME("songSheet")
     MC_AUTOWIRED("songSheetService")

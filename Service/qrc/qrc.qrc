@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>QQSignGenerator.js</file>
+        <file>QQSignGenerator.mjs</file>
     </qresource>
 </RCC>

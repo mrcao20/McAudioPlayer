@@ -5,7 +5,7 @@
 MC_FORWARD_DECL_CLASS(McMusic);
 
 class IMcAcquireMusic {
-    MC_DEFINE_TYPELIST()
+    MC_TYPELIST()
 public:
     virtual ~IMcAcquireMusic() noexcept = default;
     

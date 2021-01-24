@@ -14,7 +14,7 @@ QMutex mtx;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McPlaylistDao)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McPlaylistDao));
+MC_REGISTER_BEAN_FACTORY(McPlaylistDao);
 MC_INIT_END
 
 McPlaylistDao::McPlaylistDao() noexcept
@@ -26,13 +26,54 @@ McPlaylistDao::~McPlaylistDao() noexcept {
 }
 
 QList<McMusicPtr> McPlaylistDao::reloadMusic() noexcept {
+    if (thread() == QThread::currentThread()) {
+        return reloadMusic_helper();
+    } else {
+        QList<McMusicPtr> flag;
+        QMetaObject::invokeMethod(this,
+                                  MC_STRINGIFY(reloadMusic_helper),
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QList<McMusicPtr>, flag));
+        return flag;
+    }
+}
+
+bool McPlaylistDao::deleteAll() noexcept {
+    //    if (thread() == QThread::currentThread()) {
+    return deleteAll_helper();
+    //    } else {
+    //        bool flag = false;
+    //        QMetaObject::invokeMethod(this,
+    //                                  MC_STRINGIFY(deleteAll_helper),
+    //                                  Qt::BlockingQueuedConnection,
+    //                                  Q_RETURN_ARG(bool, flag));
+    //        return flag;
+    //    }
+}
+
+void McPlaylistDao::setMusics(const QList<McMusicPtr> &musics, int songSheetId) noexcept {
+    //    if (thread() == QThread::currentThread()) {
+    setMusics_helper(musics, songSheetId);
+    //    } else {
+    //        QMetaObject::invokeMethod(this,
+    //                                  MC_STRINGIFY(setMusics_helper),
+    //                                  Qt::BlockingQueuedConnection,
+    //                                  Q_ARG(QList<McMusicPtr>, musics),
+    //                                  Q_ARG(int, songSheetId));
+    //    }
+}
+
+QList<McMusicPtr> McPlaylistDao::reloadMusic_helper() noexcept
+{
     qDebug() << "start reload music";
     QList<McMusicPtr> musics;
     list_McPlaylistPo list_of_McPlaylistPo;
     qx::QxSqlQuery query("ORDER BY playlist_index");
-    QSqlError daoError = qx::dao::fetch_by_query_with_relation(QStringList() << "{id}"
-        << "McSonglistPo_ptr{id}",
-        query, list_of_McPlaylistPo);
+    QSqlError daoError = qx::dao::fetch_by_query_with_relation(QStringList()
+                                                                   << "{id}"
+                                                                   << "McSonglistPo_ptr{id}",
+                                                               query,
+                                                               list_of_McPlaylistPo);
     if (daoError.type() != QSqlError::NoError) {
         qCritical() << "fetch playlist failure. error:" << daoError.type()
                     << "error str:" << daoError.text();
@@ -45,10 +86,12 @@ QList<McMusicPtr> McPlaylistDao::reloadMusic() noexcept {
             continue;
         list_of_McMusicPo.push_back(pair->m_songlist->m_music);
     }
-    daoError = qx::dao::fetch_by_id_with_relation(QStringList() << "{song_index, song_title}"
-        << "album_index{album_index, album_title}"
-        << "list_McArtistPo{artists_index, artists_title}",
-        list_of_McMusicPo);
+    daoError
+        = qx::dao::fetch_by_id_with_relation(QStringList()
+                                                 << "{song_index, song_title}"
+                                                 << "album_index{album_index, album_title}"
+                                                 << "list_McArtistPo{artists_index, artists_title}",
+                                             list_of_McMusicPo);
     if (daoError.type() != QSqlError::NoError) {
         qCritical() << "fetch music detail failure. error:" << daoError.type()
                     << "error str:" << daoError.text();
@@ -82,7 +125,8 @@ QList<McMusicPtr> McPlaylistDao::reloadMusic() noexcept {
     return musics;
 }
 
-bool McPlaylistDao::deleteAll() noexcept {
+bool McPlaylistDao::deleteAll_helper() noexcept
+{
     QMutexLocker locker(&d->mtx);
     QSqlError sqlError = qx::dao::delete_all<McPlaylistPo>();
     if (sqlError.type() != QSqlError::NoError) {
@@ -92,12 +136,14 @@ bool McPlaylistDao::deleteAll() noexcept {
     return true;
 }
 
-void McPlaylistDao::setMusics(const QList<McMusicPtr> &musics, int songSheetId) noexcept {
+void McPlaylistDao::setMusics_helper(const QList<McMusicPtr> &musics, int songSheetId) noexcept
+{
     QMutexLocker locker(&d->mtx);
-    int playlistIndex = 1;	
+    int playlistIndex = 1;
     for (auto music : musics) {
         McSonglistPo_ptr songlist(new McSonglistPo);
-        qx::QxSqlQuery query("WHERE t_songlist_info.songlist_index = :songlistIndex AND t_songlist_info.song_index = :songIndex");
+        qx::QxSqlQuery query("WHERE t_songlist_info.songlist_index = :songlistIndex AND "
+                             "t_songlist_info.song_index = :songIndex");
         query.bind(":songlistIndex", songSheetId);
         query.bind(":songIndex", music->getId());
         QSqlError sqlError = qx::dao::fetch_by_query_with_relation("{id}", query, songlist);

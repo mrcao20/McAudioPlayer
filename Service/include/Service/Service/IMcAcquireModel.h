@@ -7,7 +7,7 @@ class QAbstractItemModel;
 QT_END_NAMESPACE
 
 class IMcAcquireModel {
-    MC_DEFINE_TYPELIST()
+    MC_TYPELIST()
 public:
     virtual ~IMcAcquireModel() noexcept = default;
     

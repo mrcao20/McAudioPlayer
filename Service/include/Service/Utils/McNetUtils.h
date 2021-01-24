@@ -14,7 +14,11 @@ public:
     McNetUtils() noexcept;
     
     static QByteArray getNetworkData(const QString &url, const QMap<QByteArray, QByteArray> &headers = QMap<QByteArray, QByteArray>()) noexcept;
-	static QByteArray getNetworkData(const QString& url, const QByteArray& postData, const QMap<QByteArray, QByteArray>& headers = QMap<QByteArray, QByteArray>()) noexcept;
+    static QByteArray getNetworkData(
+        const QString &url,
+        const QByteArray &postData,
+        const QMap<QByteArray, QByteArray> &headers = QMap<QByteArray, QByteArray>()) noexcept;
+    static bool download(const QString &url, const QString &path) noexcept;
 
 private:
 	QNetworkReply* getReply(QNetworkAccessManager& netMan, const QUrl& url, const QMap<QByteArray, QByteArray>& headers = QMap<QByteArray, QByteArray>()) noexcept;

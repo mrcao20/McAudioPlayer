@@ -12,7 +12,7 @@ class McPlaylistModel : public McMusicModel
     
     Q_OBJECT
     MC_DECL_INIT(McPlaylistModel)
-    MC_DEFINE_TYPELIST(MC_DECL_TYPELIST(McMusicModel), MC_DECL_TYPELIST(IMcPlaylistModel))
+    MC_TYPELIST(McMusicModel, IMcPlaylistModel)
     MC_MODEL
     MC_BEANNAME("playlistModel")
 public:

@@ -7,7 +7,7 @@ MC_DECL_PRIVATE_DATA(McSonglistModel)
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McSonglistModel)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McSonglistModel))
+MC_REGISTER_BEAN_FACTORY(McSonglistModel)
 MC_INIT_END
 
 McSonglistModel::McSonglistModel() noexcept

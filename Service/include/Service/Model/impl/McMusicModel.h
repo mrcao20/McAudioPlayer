@@ -33,7 +33,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McMusicModel);
 class McMusicModel : public QAbstractListModel {
     Q_OBJECT
     MC_DECL_INIT(McMusicModel)
-    MC_DEFINE_TYPELIST(QAbstractListModel)
+    MC_TYPELIST(QAbstractListModel)
 public:
     enum Roles {
         SongNameRole = Qt::UserRole + 1,

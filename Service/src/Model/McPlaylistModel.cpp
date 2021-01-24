@@ -7,7 +7,7 @@ MC_DECL_PRIVATE_DATA(McPlaylistModel)
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McPlaylistModel)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McPlaylistModel))
+MC_REGISTER_BEAN_FACTORY(McPlaylistModel)
 MC_INIT_END
 
 McPlaylistModel::McPlaylistModel() noexcept

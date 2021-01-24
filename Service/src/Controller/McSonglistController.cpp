@@ -12,7 +12,7 @@ IMcPlaylistServicePtr playlistService;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McSonglistController)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McSonglistController));
+MC_REGISTER_BEAN_FACTORY(McSonglistController);
 MC_REGISTER_LIST_CONVERTER(QList<int>);
 MC_INIT_END
 

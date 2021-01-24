@@ -44,7 +44,7 @@ void clearSongSheets() {
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McSongSheetModel)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McSongSheetModel));
+MC_REGISTER_BEAN_FACTORY(McSongSheetModel);
 MC_INIT_END
 
 McSongSheetModel::McSongSheetModel() noexcept

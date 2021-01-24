@@ -17,7 +17,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McPlaylistController);
 class McPlaylistController : public QObject {
     Q_OBJECT
     MC_DECL_INIT(McPlaylistController)
-    MC_DEFINE_TYPELIST(QObject)
+    MC_TYPELIST(QObject)
     MC_CONTROLLER
     MC_BEANNAME("playlist")
     MC_AUTOWIRED("playlistService")

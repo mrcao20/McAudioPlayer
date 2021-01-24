@@ -5,7 +5,7 @@
 MC_FORWARD_DECL_CLASS(McSongSheet);
 
 class IMcSongSheetService : public IMcAcquireModel {
-    MC_DEFINE_TYPELIST(MC_DECL_TYPELIST(IMcAcquireModel))
+    MC_TYPELIST(IMcAcquireModel)
 public:
     ~IMcSongSheetService() noexcept override = default;
     

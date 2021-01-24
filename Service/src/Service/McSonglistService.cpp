@@ -22,7 +22,7 @@ IMcNetworkMusicDaoPtr networkMusicDao;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McSonglistService)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McSonglistService));
+MC_REGISTER_BEAN_FACTORY(McSonglistService);
 MC_INIT_END
 
 McSonglistService::McSonglistService() noexcept

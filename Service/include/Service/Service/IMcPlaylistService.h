@@ -5,7 +5,7 @@
 MC_FORWARD_DECL_CLASS(McMusic);
 
 class IMcPlaylistService : public IMcAcquireModel {
-    MC_DEFINE_TYPELIST(MC_DECL_TYPELIST(IMcAcquireModel))
+    MC_TYPELIST(IMcAcquireModel)
 public:
     ~IMcPlaylistService() noexcept override = default;
     

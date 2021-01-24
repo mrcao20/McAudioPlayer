@@ -12,7 +12,7 @@ IMcPlaylistServicePtr playlistService;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McNetworkMusicController)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McNetworkMusicController));
+MC_REGISTER_BEAN_FACTORY(McNetworkMusicController);
 MC_INIT_END
 
 McNetworkMusicController::McNetworkMusicController() noexcept

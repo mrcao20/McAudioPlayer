@@ -12,7 +12,7 @@ MC_FORWARD_DECL_PRIVATE_DATA(McNetworkMusicService);
 class McNetworkMusicService : public QObject, public IMcNetworkMusicService {
     Q_OBJECT
     MC_DECL_INIT(McNetworkMusicService)
-    MC_DEFINE_TYPELIST(QObject, MC_DECL_TYPELIST(IMcNetworkMusicService))
+    MC_TYPELIST(QObject, IMcNetworkMusicService)
     MC_SERVICE
     MC_BEANNAME("networkMusicService")
     MC_AUTOWIRED("model = networkMusicModel")

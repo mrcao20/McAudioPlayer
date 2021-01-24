@@ -21,7 +21,7 @@ MC_DECL_PRIVATE_DATA(McQQMusic)
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McQQMusic)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McQQMusic));
+MC_REGISTER_BEAN_FACTORY(McQQMusic);
 MC_INIT_END
 
 McQQMusic::McQQMusic() noexcept
@@ -37,7 +37,7 @@ QString McQQMusic::getUrl(McMusicConstPtrRef music) noexcept {
     QString data = QString(R"({"req_0":{"module":"vkey.GetVkeyServer","method":"CgiGetVkey","param":{"guid":"7176926105","songmid":["%1"],"songtype":[0],"uin":"839566521","loginflag":1,"platform":"20"}},"comm":{"uin":839566521,"format":"json","ct":24,"cv":0}})")
             .arg(songMid);
     QJSEngine jsEngine;
-    QFile file(":/QQSignGenerator.js");
+    QFile file(":/QQSignGenerator.mjs");
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream stream(&file);
     QString js = stream.readAll();
@@ -62,6 +62,11 @@ QString McQQMusic::getUrl(McMusicConstPtrRef music) noexcept {
         url = sip + purl;
     }
     return url;
+}
+
+QString McQQMusic::getDownloadLink(McMusicConstPtrRef music) noexcept
+{
+    return getUrl(music);
 }
 
 QList<McMusicPtr> McQQMusic::getMusics(const QString& songName, int limit, int offset) noexcept {

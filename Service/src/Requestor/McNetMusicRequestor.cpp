@@ -14,7 +14,7 @@ MC_PADDING_CLANG(4)
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McNetMusicRequestor)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McNetMusicRequestor));
+MC_REGISTER_BEAN_FACTORY(McNetMusicRequestor);
 MC_REGISTER_MAP_CONVERTER(McMusicApis);
 MC_INIT_END
 
@@ -45,6 +45,20 @@ QString McNetMusicRequestor::getMusicUrl(McMusicConstPtrRef music) noexcept {
         return "";
     }
     return d->musicApis[music->getSongSrc()]->getMusicUrl(music);
+}
+
+QString McNetMusicRequestor::getDownloadUrl(McMusicConstPtrRef music) noexcept
+{
+    if (music.isNull()) {
+        qCritical() << "music is null";
+        return "";
+    }
+    if (!d->musicApis.contains(music->getSongSrc())) {
+        qCritical() << "not contains song src api. the src:" << music->getSongSrc()
+                    << "song name:" << music->getSongTitle();
+        return "";
+    }
+    return d->musicApis[music->getSongSrc()]->getDownloadUrl(music);
 }
 
 QList<McMusicPtr> McNetMusicRequestor::getNetworkMusics(const QString &musicSrc, const QString &keyword) noexcept {

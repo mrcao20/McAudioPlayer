@@ -12,7 +12,7 @@ IMcPlaylistServicePtr playlistService;
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McPlaylistController)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McPlaylistController));
+MC_REGISTER_BEAN_FACTORY(McPlaylistController);
 MC_INIT_END
 
 McPlaylistController::McPlaylistController() noexcept

@@ -7,10 +7,7 @@
 class IMcNetworkMusicService : public IMcAcquireModel 
         , public IMcAcquireMusic 
         , public IMcMusicForSongSheet {
-    
-    MC_DEFINE_TYPELIST(MC_DECL_TYPELIST(IMcAcquireModel)
-                       , MC_DECL_TYPELIST(IMcAcquireMusic)
-                       , MC_DECL_TYPELIST(IMcMusicForSongSheet))
+    MC_TYPELIST(IMcAcquireModel, IMcAcquireMusic, IMcMusicForSongSheet)
 public:
     using IMcMusicForSongSheet::addToSongSheet;
     

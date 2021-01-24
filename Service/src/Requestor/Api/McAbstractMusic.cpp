@@ -13,7 +13,7 @@ MC_DECL_PRIVATE_DATA(McAbstractMusic)
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McAbstractMusic)
-MC_REGISTER_BEAN_FACTORY(MC_TYPELIST(McAbstractMusic));
+MC_REGISTER_BEAN_FACTORY(McAbstractMusic);
 MC_INIT_END
 
 McAbstractMusic::McAbstractMusic() noexcept
@@ -29,7 +29,15 @@ QString McAbstractMusic::getMusicUrl(McMusicConstPtrRef music) noexcept {
     return musicUrl;
 }
 
-QList<McMusicPtr> McAbstractMusic::searchSong(const QString &songName, int limit, int offset) noexcept {
+QString McAbstractMusic::getDownloadUrl(McMusicConstPtrRef music) noexcept
+{
+    return getDownloadLink(music);
+}
+
+QList<McMusicPtr> McAbstractMusic::searchSong(const QString &songName,
+                                              int limit,
+                                              int offset) noexcept
+{
     QList<McMusicPtr> musics = getMusics(songName, limit, offset);
     int id = -1;
     for (auto music : musics)
