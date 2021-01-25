@@ -47,10 +47,6 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../Download/GitHu
 INCLUDEPATH += $$PWD/../../../Download/GitHub/QxOrm/include
 DEPENDPATH += $$PWD/../../../Download/GitHub/QxOrm/include
 
-INCLUDEPATH += -I  D:/Soft/Study/VS/2019/Shared/Python37_64/include
-
-LIBS += -LD:/Soft/Study/VS/2019/Shared/Python37_64/libs -lpython37
-
 msvc {
     QMAKE_CFLAGS += /utf-8
     QMAKE_CXXFLAGS += /utf-8
@@ -58,14 +54,3 @@ msvc {
 
 QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
 QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0/x64/Output/release/ -lcryptlib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0/x64/Output/debug/ -lcryptlib
-
-INCLUDEPATH += $$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0
-DEPENDPATH += $$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0/x64/Output/release/libcryptlib.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0/x64/Output/debug/libcryptlib.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0/x64/Output/release/cryptlib.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../Download/Normal/cryptopp-CRYPTOPP_8_4_0/x64/Output/debug/cryptlib.lib

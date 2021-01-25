@@ -1,6 +1,7 @@
 #include "Service/Requestor/Api/impl/McYMusic.h"
 
-#include <QJsonValue>
+#include <QDir>
+#include <QJSEngine>
 #include <QJsonArray>
 #include <QJsonObject>
 
@@ -8,7 +9,6 @@
 #include "Service/Domain/Vo/McArtist.h"
 #include "Service/Domain/Vo/McMusic.h"
 #include "Service/McGlobal.h"
-#include "Service/Utils/McCrypto.h"
 #include "Service/Utils/McNetUtils.h"
 
 #define SONG_LINK "http://music.163.com/song/media/outer/url?id=%1"
@@ -16,12 +16,14 @@
 #define SEARCH_SONG_POST "http://music.163.com/api/search/get"
 
 MC_DECL_PRIVATE_DATA(McYMusic)
-McCrypto crypto;
+QJSEngine jsEngine;
+QJSValue encryptValue;
 QString pubKey = "010001";
 QString modulus
     = "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e41"
       "7629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575c"
       "ce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7";
+QString aesKey = "0CoJUm6Qyw8W8jud";
 MC_DECL_PRIVATE_DATA_END
 
 MC_INIT(McYMusic)
@@ -31,6 +33,21 @@ MC_INIT_END
 McYMusic::McYMusic() noexcept
 {
     MC_NEW_PRIVATE_DATA(McYMusic);
+
+    QDir dir(":/crypto-js");
+    auto fileInfos = dir.entryInfoList(QDir::Files);
+    for (auto fileInfo : fileInfos) {
+        auto path = fileInfo.absoluteFilePath();
+        if (!path.endsWith(".js")) {
+            continue;
+        }
+        qInfo() << "found crypto-js file:" << path;
+        QFile file(path);
+        file.open(QIODevice::ReadOnly);
+        d->jsEngine.evaluate(file.readAll());
+    }
+    auto module = d->jsEngine.importModule(":/Encrypt.mjs");
+    d->encryptValue = module.property("d");
 }
 
 McYMusic::~McYMusic() noexcept {
@@ -51,26 +68,11 @@ QString McYMusic::getDownloadLink(McMusicConstPtrRef music) noexcept
 {
     QString text = QString("{\"ids\":\"[%1]\",\"br\":128000,\"csrf_token\":\"\"}")
                        .arg(music->getSongId());
-    QString secKey;
-    QString encSecKey;
-#ifdef _DEBUG
-    secKey = "FFFFFFFFFFFFFFFF";
-    encSecKey
-        = "257348aecb5e556c066de214e531faadd1c55d814f9be95fd06d6bff9f4c7a41f831f6394d5a3fd2e3881736"
-          "d94a02ca919d952872e7d0a50ebfa1769a7a62d512f5f1ca21aec60bc3819a9c3ffca5eca9a0dba6d6f7249b"
-          "06f5965ecfff3695b54e1c28f3f624750ed39e7de08fc8493242e26dbc4484a01c76f739e135637c";
-#else
-    secKey = d->crypto.getSecretKey(16);
-    if (secKey.isEmpty()) {
-        return "";
-    }
-    encSecKey = getEncryptEncSecKey(secKey); // 将上述动态生成的第二个秘钥RSA加密作为参数
-    if (encSecKey.isEmpty()) {
-        return "";
-    }
-#endif // _DEBUG
-    QString params
-        = getEncryptParams(text, secKey); // 通过已经固定的第一个秘钥和动态生成的第二个秘钥加密text
+    QJSValueList args;
+    args << text << d->pubKey << d->modulus << d->aesKey;
+    auto result = d->encryptValue.call(args);
+    QString encSecKey = result.property("encSecKey").toString();
+    QString params = result.property("encText").toString();
     QMap<QByteArray, QByteArray> header;
     header["Referer"] = "https://music.163.com/";
     header["Host"] = "music.163.com";
@@ -125,21 +127,6 @@ QString McYMusic::getDownloadLink(McMusicConstPtrRef music) noexcept
 QList<McMusicPtr> McYMusic::getMusics(const QString &songName, int limit, int offset) noexcept
 {
     return getMusics(songName, limit, offset, "1", true);
-}
-
-QString McYMusic::getEncryptParams(const QString &text, const QString &secKey) noexcept
-{
-    QString iv = "0102030405060708";
-    QString params = d->crypto.aesEncrypt(text, "0CoJUm6Qyw8W8jud", iv);
-    params = d->crypto.aesEncrypt(params, secKey, iv);
-    params = QUrl::toPercentEncoding(params);
-    return params;
-}
-
-QString McYMusic::getEncryptEncSecKey(const QString &text) noexcept
-{
-    QString params = d->crypto.rsaEncrypt(text, d->pubKey, d->modulus);
-    return params;
 }
 
 QList<McMusicPtr> McYMusic::getMusics(const QString& songName, int limit, int offset, const QString& type, bool total) noexcept {

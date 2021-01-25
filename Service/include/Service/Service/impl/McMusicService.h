@@ -4,6 +4,7 @@
 #include <McBoot/McBootGlobal.h>
 
 MC_FORWARD_DECL_CLASS(IMcMusicDao);
+MC_FORWARD_DECL_CLASS(IMcNetMusicRequestor);
 
 MC_FORWARD_DECL_PRIVATE_DATA(McMusicService);
 
@@ -15,6 +16,8 @@ class McMusicService : public QObject, public IMcMusicService {
     MC_BEANNAME("musicService")
     MC_AUTOWIRED("musicDao")
     Q_PROPERTY(IMcMusicDaoPtr musicDao READ musicDao WRITE setMusicDao)
+    MC_AUTOWIRED("requestor")
+    Q_PRIVATE_PROPERTY(d, IMcNetMusicRequestorPtr requestor MEMBER requestor)
 public:
     Q_INVOKABLE McMusicService() noexcept;
     ~McMusicService() noexcept override;

@@ -18,8 +18,6 @@ protected:
     QList<McMusicPtr> getMusics(const QString& songName, int limit, int offset) noexcept override;
     
 private:
-    QString getEncryptParams(const QString &text, const QString &secKey) noexcept;
-    QString getEncryptEncSecKey(const QString &text) noexcept;
     QList<McMusicPtr> getMusics(
         const QString &songName, int limit, int offset, const QString &type, bool total) noexcept;
 

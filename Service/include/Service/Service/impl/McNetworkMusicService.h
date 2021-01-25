@@ -6,6 +6,7 @@
 MC_FORWARD_DECL_CLASS(IMcNetworkMusicModel);
 MC_FORWARD_DECL_CLASS(IMcSonglistDao);
 MC_FORWARD_DECL_CLASS(IMcNetworkMusicDao);
+MC_FORWARD_DECL_CLASS(IMcNetMusicRequestor);
 
 MC_FORWARD_DECL_PRIVATE_DATA(McNetworkMusicService);
 
@@ -21,6 +22,8 @@ class McNetworkMusicService : public QObject, public IMcNetworkMusicService {
     Q_PROPERTY(IMcSonglistDaoPtr songlistDao READ songlistDao WRITE setSonglistDao)
     MC_AUTOWIRED("networkMusicDao")
     Q_PROPERTY(IMcNetworkMusicDaoPtr networkMusicDao READ networkMusicDao WRITE setNetworkMusicDao)
+    MC_AUTOWIRED("requestor")
+    Q_PRIVATE_PROPERTY(d, IMcNetMusicRequestorPtr requestor MEMBER requestor)
 public:
     Q_INVOKABLE McNetworkMusicService() noexcept;
     ~McNetworkMusicService() noexcept override;

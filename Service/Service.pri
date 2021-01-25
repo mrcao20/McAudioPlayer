@@ -1,4 +1,5 @@
 HEADERS += \
+    $$PWD/include/Service/Configuration/McConfiguration.h \
     $$PWD/include/Service/Dll.h \
     $$PWD/include/Service/Controller/McNetworkMusicController.h \
     $$PWD/include/Service/Controller/McPlaylistController.h \
@@ -57,11 +58,11 @@ HEADERS += \
     $$PWD/include/Service/Service/impl/McPlaylistService.h \
     $$PWD/include/Service/Service/impl/McSongSheetService.h \
     $$PWD/include/Service/Service/impl/McSonglistService.h \
-    $$PWD/include/Service/Utils/McCrypto.h \
     $$PWD/include/Service/Utils/McNetUtils.h \
     $$PWD/include/Service/Utils/McOrmUtils.h
 
 SOURCES += \
+    $$PWD/src/Configuration/McConfiguration.cpp \
     $$PWD/src/Controller/McNetworkMusicController.cpp \
     $$PWD/src/Controller/McPlaylistController.cpp \
     $$PWD/src/Controller/McSongSheetController.cpp \
@@ -97,21 +98,9 @@ SOURCES += \
     $$PWD/src/Service/McPlaylistService.cpp \
     $$PWD/src/Service/McSongSheetService.cpp \
     $$PWD/src/Service/McSonglistService.cpp \
-    $$PWD/src/Utils/McCrypto.cpp \
     $$PWD/src/Utils/McNetUtils.cpp
 
 INCLUDEPATH += $$PWD/include/
 
 RESOURCES += \
     $$PWD/qrc/qrc.qrc
-
-DISTFILES += \
-    $$PWD/qrc/Encrypt.py
-    
-InputFilePath = $$PWD/qrc/Encrypt.py
-InputFilePath = $$replace(InputFilePath, /, \\)
-OutputFilePath = $${DESTDIR}/Encrypt.py
-OutputFilePath = $$replace(OutputFilePath, /, \\)
-QMAKE_POST_LINK += \
-    $${QMAKE_COPY_FILE} $$InputFilePath $$OutputFilePath
-

@@ -6,8 +6,6 @@
 #include <QMutexLocker>
 #include <QDebug>
 
-#include <McIoc/ApplicationContext/impl/McLocalPathApplicationContext.h>
-
 #include "Service/Requestor/IMcNetMusicRequestor.h"
 #include "Service/Model/IMcNetworkMusicModel.h"
 #include "Service/Dao/IMcSonglistDao.h"
@@ -32,11 +30,6 @@ MC_INIT_END
 McNetworkMusicService::McNetworkMusicService() noexcept
 {
     MC_NEW_PRIVATE_DATA(McNetworkMusicService);
-    auto configPath = QDir(qApp->applicationDirPath()).filePath(MC_NET_MUSIC_REQUESTOR_CONFIG_PATH);
-    configPath = QDir::cleanPath(configPath);
-    qInfo() << "the net music requestor config path:" << configPath;
-    auto appCxt = McLocalPathApplicationContextPtr::create(configPath);
-    d->requestor = appCxt->getBean<IMcNetMusicRequestor>("requestor");
 }
 
 McNetworkMusicService::~McNetworkMusicService() noexcept {
@@ -166,3 +159,5 @@ void McNetworkMusicService::getNextPageMusic() noexcept {
 void McNetworkMusicService::clearModel() noexcept {
     
 }
+
+#include "moc_McNetworkMusicService.cpp"

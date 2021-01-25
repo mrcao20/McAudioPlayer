@@ -25,11 +25,6 @@ MC_INIT_END
 McMusicService::McMusicService() noexcept
 {
     MC_NEW_PRIVATE_DATA(McMusicService);
-    auto configPath = QDir(qApp->applicationDirPath()).filePath(MC_NET_MUSIC_REQUESTOR_CONFIG_PATH);
-    configPath = QDir::cleanPath(configPath);
-    qInfo() << "the net music requestor config path:" << configPath;
-    auto appCxt = McLocalPathApplicationContextPtr::create(configPath);
-    d->requestor = appCxt->getBean<IMcNetMusicRequestor>("requestor");
 }
 
 McMusicService::~McMusicService() noexcept {
@@ -80,3 +75,5 @@ void McMusicService::acquireMusicUrl(McMusicConstPtrRef music) noexcept {
         d->musicDao->updateMusicUrl(music);
     });
 }
+
+#include "moc_McMusicService.cpp"
