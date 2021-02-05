@@ -66,6 +66,58 @@ QString McYMusic::getUrl(McMusicConstPtrRef music) noexcept {
 
 QString McYMusic::getDownloadLink(McMusicConstPtrRef music) noexcept
 {
+    return getDownloadLinkNew(music);
+}
+
+QList<McMusicPtr> McYMusic::getMusics(const QString &songName, int limit, int offset) noexcept
+{
+    return getMusics(songName, limit, offset, "1", true);
+}
+
+QList<McMusicPtr> McYMusic::getMusics(const QString& songName, int limit, int offset, const QString& type, bool total) noexcept {
+    QList<McMusicPtr> musics;
+    musics.reserve(limit);
+    QByteArray postData;
+    postData.append(QString("s=%1&").arg(songName));
+    postData.append(QString("offset=%1&").arg(offset));
+    postData.append(QString("type=%1&").arg(type));
+    postData.append(QString("limit=%1&").arg(limit));
+    postData.append(QString("total=%1").arg(total));
+    QByteArray json = McNetUtils::getNetworkData(SEARCH_SONG_POST, postData);
+    QJsonArray jsonArray = getJsonValue(json, "result.songs").toArray();
+    for (auto itr = jsonArray.constBegin(), itrEnd = jsonArray.constEnd(); itr != itrEnd; ++itr) {
+        QJsonObject jsonObject = itr->toObject();
+        McMusicPtr music = McMusicPtr::create();
+        music->setSongTitle(getJsonValue(jsonObject, "name").toString());
+        music->setSongSrc(MC_SONG_SRC_YMUSIC);
+        music->setSongId(QString::number(getJsonValue(jsonObject, "id").toInt()));
+        music->setSongName(music->getSongTitle());
+        music->setSongTitleHilight(music->getSongTitle());
+        // 由于网易云音乐获取url甚至不需要做任何请求或计算，只需要拼接，故此处提前获取url
+        music->setSongUrl(getUrl(music));
+        McAlbumPtr album = McAlbumPtr::create();
+        album->setAlbumId(QString::number(getJsonValue(jsonObject, "album.id").toInt()));
+        album->setAlbumName(getJsonValue(jsonObject, "album.name").toString());
+        album->setAlbumTitle(album->getAlbumName());
+        album->setAlbumTitleHilight(album->getAlbumName());
+        music->setAlbum(album);
+        QJsonArray artistsJson = getJsonValue(jsonObject, "artists").toArray();
+        for (auto aitr = artistsJson.constBegin(), aitrEnd = artistsJson.constEnd(); aitr != aitrEnd; ++aitr) {
+            QJsonObject artistJsonObj = aitr->toObject();
+            McArtistPtr artist = McArtistPtr::create();
+            artist->setArtistId(QString::number(getJsonValue(artistJsonObj, "id").toInt()));
+            artist->setArtistName(getJsonValue(artistJsonObj, "name").toString());
+            artist->setArtistTitle(artist->getArtistName());
+            artist->setArtistTitleHilight(artist->getArtistName());
+            music->addArtist(artist);
+        }
+        musics.append(music);
+    }
+    return musics;
+}
+
+QString McYMusic::getDownloadLinkOld(McMusicConstPtrRef music) noexcept
+{
     QString text = QString("{\"ids\":\"[%1]\",\"br\":128000,\"csrf_token\":\"\"}")
                        .arg(music->getSongId());
     QJSValueList args;
@@ -124,49 +176,13 @@ QString McYMusic::getDownloadLink(McMusicConstPtrRef music) noexcept
     return songLink;
 }
 
-QList<McMusicPtr> McYMusic::getMusics(const QString &songName, int limit, int offset) noexcept
+QString McYMusic::getDownloadLinkNew(McMusicConstPtrRef music) noexcept
 {
-    return getMusics(songName, limit, offset, "1", true);
-}
-
-QList<McMusicPtr> McYMusic::getMusics(const QString& songName, int limit, int offset, const QString& type, bool total) noexcept {
-    QList<McMusicPtr> musics;
-    musics.reserve(limit);
-    QByteArray postData;
-    postData.append(QString("s=%1&").arg(songName));
-    postData.append(QString("offset=%1&").arg(offset));
-    postData.append(QString("type=%1&").arg(type));
-    postData.append(QString("limit=%1&").arg(limit));
-    postData.append(QString("total=%1").arg(total));
-    QByteArray json = McNetUtils::getNetworkData(SEARCH_SONG_POST, postData);
-    QJsonArray jsonArray = getJsonValue(json, "result.songs").toArray();
-    for (auto itr = jsonArray.constBegin(), itrEnd = jsonArray.constEnd(); itr != itrEnd; ++itr) {
-        QJsonObject jsonObject = itr->toObject();
-        McMusicPtr music = McMusicPtr::create();
-        music->setSongTitle(getJsonValue(jsonObject, "name").toString());
-        music->setSongSrc(MC_SONG_SRC_YMUSIC);
-        music->setSongId(QString::number(getJsonValue(jsonObject, "id").toInt()));
-        music->setSongName(music->getSongTitle());
-        music->setSongTitleHilight(music->getSongTitle());
-        // 由于网易云音乐获取url甚至不需要做任何请求或计算，只需要拼接，故此处提前获取url
-        music->setSongUrl(getUrl(music));
-        McAlbumPtr album = McAlbumPtr::create();
-        album->setAlbumId(QString::number(getJsonValue(jsonObject, "album.id").toInt()));
-        album->setAlbumName(getJsonValue(jsonObject, "album.name").toString());
-        album->setAlbumTitle(album->getAlbumName());
-        album->setAlbumTitleHilight(album->getAlbumName());
-        music->setAlbum(album);
-        QJsonArray artistsJson = getJsonValue(jsonObject, "artists").toArray();
-        for (auto aitr = artistsJson.constBegin(), aitrEnd = artistsJson.constEnd(); aitr != aitrEnd; ++aitr) {
-            QJsonObject artistJsonObj = aitr->toObject();
-            McArtistPtr artist = McArtistPtr::create();
-            artist->setArtistId(QString::number(getJsonValue(artistJsonObj, "id").toInt()));
-            artist->setArtistName(getJsonValue(artistJsonObj, "name").toString());
-            artist->setArtistTitle(artist->getArtistName());
-            artist->setArtistTitleHilight(artist->getArtistName());
-            music->addArtist(artist);
+    auto headers = McNetUtils::getResponseHeader(music->getSongUrl());
+    for (auto header : headers) {
+        if (header.first == "Location") {
+            return header.second;
         }
-        musics.append(music);
     }
-    return musics;
+    return "";
 }

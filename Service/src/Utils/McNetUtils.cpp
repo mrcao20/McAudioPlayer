@@ -26,6 +26,16 @@ QByteArray McNetUtils::getNetworkData(const QString& url, const QByteArray& post
 	return data;
 }
 
+QList<McNetUtils::RawHeaderPair> McNetUtils::getResponseHeader(
+    const QUrl &url, const QMap<QByteArray, QByteArray> &headers) noexcept
+{
+    McNetUtils instance;
+    QNetworkAccessManager netMan;
+    QNetworkReply *reply = instance.getReply(netMan, url, headers);
+    instance.waitForReplyFinished(reply);
+    return reply->rawHeaderPairs();
+}
+
 bool McNetUtils::download(const QString &url, const QString &path) noexcept
 {
     if (url.isEmpty()) {
@@ -73,15 +83,21 @@ QNetworkReply* McNetUtils::getReply(QNetworkAccessManager& netMan, const QUrl& u
 	return netMan.post(request, postData);
 }
 
-QByteArray McNetUtils::getNetworkData(QNetworkReply *reply) noexcept {
-	QEventLoop loop;
-	connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-	loop.exec();
-    if(reply->error() != QNetworkReply::NoError) {
+void McNetUtils::waitForReplyFinished(QNetworkReply *reply) noexcept
+{
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    if (reply->error() != QNetworkReply::NoError) {
         qCritical() << "http  request occurred error:" << reply->error()
-                    << "error str:" << reply->errorString();
+                    << "error str:" << reply->errorString() << "url:" << reply->request().url();
     }
-	QByteArray data = reply->readAll();
+}
+
+QByteArray McNetUtils::getNetworkData(QNetworkReply *reply) noexcept
+{
+    waitForReplyFinished(reply);
+    QByteArray data = reply->readAll();
 	closeReply(reply);
 	return data;
 }

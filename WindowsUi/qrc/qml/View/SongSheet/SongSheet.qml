@@ -218,7 +218,7 @@ Item {
                 return;
             }
             var songSheet = songSheetItem.songSheets[currentIndex];
-            songSheetItem.signal_currentChanged(songSheet.id, songSheet.songSheet);
+            emit: songSheetItem.signal_currentChanged(songSheet.id, songSheet.songSheet);
             songSheetItem.currentIndex = songSheetView.currentIndex;
         }
         

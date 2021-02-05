@@ -20,6 +20,8 @@ protected:
 private:
     QList<McMusicPtr> getMusics(
         const QString &songName, int limit, int offset, const QString &type, bool total) noexcept;
+    QString getDownloadLinkOld(McMusicConstPtrRef music) noexcept;
+    QString getDownloadLinkNew(McMusicConstPtrRef music) noexcept;
 
 private:
     MC_DECL_PRIVATE(McYMusic)

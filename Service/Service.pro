@@ -1,5 +1,5 @@
 QT -= gui
-QT += sql network concurrent av qml mcquickboot
+QT += sql network concurrent av qml quickboot
 
 TARGET = $$qt5LibraryTarget($$TARGET)
 

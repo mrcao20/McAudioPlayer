@@ -1,4 +1,4 @@
-QT += mcquickboot
+QT += quickboot
 
 TARGET = McAudioPlayer
 
