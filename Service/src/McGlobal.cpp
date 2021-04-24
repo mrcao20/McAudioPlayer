@@ -1,11 +1,15 @@
 #include "Service/McGlobal.h"
 
+#include <McBoot/McBootGlobal.h>
+
 #include <QxOrm.h>
 #include <QxOrm_Impl.h>
 
-namespace McAudioPlayerService {
+MC_QUICKBOOT_SERVICE_EXPORT(McAudioPlayer)
 
-void load() noexcept
+namespace {
+
+void init()
 {
     // Parameters to connect to database
     /*qx::QxSqlDatabase::getSingleton()->setDriverName("QMYSQL");
@@ -24,10 +28,14 @@ void load() noexcept
     qx::QxSqlDatabase::getSingleton()->setUserName("root");
     qx::QxSqlDatabase::getSingleton()->setPassword("839566521");
     qx::QxSqlDatabase::getSingleton()->setTraceSqlQuery(false);
-//        qx::QxSqlDatabase::getSingleton()->setFormatSqlQueryBeforeLogging(true);
+    //        qx::QxSqlDatabase::getSingleton()->setFormatSqlQueryBeforeLogging(true);
 
     // Only for debug purpose : assert if invalid offset detected fetching a relation
     qx::QxSqlDatabase::getSingleton()->setVerifyOffsetRelation(true);
 }
 
-}
+} // namespace
+
+MC_STATIC()
+init();
+MC_STATIC_END

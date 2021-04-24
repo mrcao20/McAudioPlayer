@@ -1,6 +1,5 @@
 HEADERS += \
     $$PWD/include/Service/Configuration/McConfiguration.h \
-    $$PWD/include/Service/Dll.h \
     $$PWD/include/Service/Controller/McNetworkMusicController.h \
     $$PWD/include/Service/Controller/McPlaylistController.h \
     $$PWD/include/Service/Controller/McSongSheetController.h \
@@ -28,7 +27,6 @@ HEADERS += \
     $$PWD/include/Service/Domain/Vo/McSongSheet.h \
     $$PWD/include/Service/McGlobal.h \
     $$PWD/include/Service/McMacroDefines.h \
-    $$PWD/include/Service/McVersion.h \
     $$PWD/include/Service/Model/IMcMusicModel.h \
     $$PWD/include/Service/Model/IMcNetworkMusicModel.h \
     $$PWD/include/Service/Model/IMcPlaylistModel.h \

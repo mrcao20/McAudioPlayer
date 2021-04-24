@@ -7,13 +7,13 @@
 
 #include <McBoot/McQuickBoot.h>
 
-#include <Service/McGlobal.h>
-#include <Service/McVersion.h>
-
-#include "McLog/McLogManager.h"
-#include "McLog/Configurator/McXMLConfigurator.h"
+#include <McLog/Configurator/McXMLConfigurator.h>
+#include <McLog/McLogManager.h>
 
 #include "McExceptionFilter.h"
+#include "McVersion.h"
+
+#define MC_LOG_CONFIG_PATH "config/logqt.xml"
 
 QString commandLineFilePathArgument() {
 	const QStringList args = QCoreApplication::arguments();
@@ -29,7 +29,9 @@ int main(int argc, char *argv[])
 #ifndef QT_DEBUG
     SetUnhandledExceptionFilter(ExceptionFilter);
 #endif
-    
+
+    Mc::setLibraryCheckSymbol(QLatin1String("McAudioPlayer"));
+
     McQuickBoot::setPreInitFunc([](QCoreApplication *app){
         QString logPath = QDir(app->applicationDirPath()).filePath(MC_LOG_CONFIG_PATH);
 #ifndef QT_DEBUG
@@ -40,8 +42,6 @@ int main(int argc, char *argv[])
         qInfo() << "log config path" << logPath;
     });
     McQuickBoot::setAfterInitFunc([](QCoreApplication *app, QQmlApplicationEngine *engine){
-        McAudioPlayerService::load();
-        
         app->setOrganizationName("mrcao");
         app->setOrganizationDomain("mrcao.mc");
         app->setApplicationName("McAudioPlayer");
